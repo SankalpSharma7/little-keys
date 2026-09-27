@@ -2,6 +2,12 @@
 
 A calm, playful piano-learning companion for a beginner with a Casio CT-X870IN and a laptop. No cables, account, microphone, external assets, or package installation are required.
 
+## Live website
+
+Open **https://sankalpsharma7.github.io/little-keys/**. GitHub Pages serves the app directly from the `main` branch; future pushes to `main` update the live website automatically.
+
+The website works without running the local server. To transfer your existing practice progress, export a backup from the local app and import it on the live website. Each browser and website origin keeps its own progress.
+
 ## Run
 
 On this Mac, double-click **Start Little Keys.command** in Finder. It opens the app in your default browser. Keep its terminal window open while practising; close it when finished. If the app is already running, the launcher reuses it.
