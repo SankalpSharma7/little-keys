@@ -4,7 +4,7 @@ A calm, playful piano-learning companion for a beginner with a Casio CT-X870IN a
 
 ## Live website
 
-Open **https://sankalpsharma7.github.io/little-keys/**. GitHub Pages serves the app directly from the `main` branch; future pushes to `main` update the live website automatically.
+Open **https://sankalp.is-a.dev/little-keys/**. GitHub Pages uses the account's existing custom domain and serves the app directly from the `main` branch; future pushes to `main` update the live website automatically. The default GitHub Pages address, https://sankalpsharma7.github.io/little-keys/, redirects to this domain.
 
 The website works without running the local server. To transfer your existing practice progress, export a backup from the local app and import it on the live website. Each browser and website origin keeps its own progress.
 
