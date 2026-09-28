@@ -71,8 +71,8 @@ const audio = new PianoAudio((notes, index, metronome) => {
   document.querySelectorAll('.piano-key').forEach(key => key.classList.toggle('sounding', !answerHidden && notes.some(note => midi(note) === midi(key.dataset.note))));
   const studyStatus = document.querySelector('#study-status');
   if (studyStatus) {
-    studyStatus.textContent = metronome && index < 0 ? `Count in: ${index + 5} of 4` : !metronome && index >= 0 && notes.length ? `Bar ${Math.floor(index / 4) + 1} · beat ${index % 4 + 1}` : ticking ? 'Metronome running' : 'Ready when you are. Start after the count-in.';
-    document.querySelectorAll('.study-bar').forEach(bar => bar.classList.toggle('active', !metronome && notes.length > 0 && Number(bar.dataset.bar) === Math.floor(index / 4)));
+    studyStatus.textContent = metronome && index < 0 ? `Count in: ${index + 5} of 4` : !metronome && index >= 0 && notes.length ? `${currentLesson?.steps[currentStep]?.tracks?.sections?.find(s => Math.floor(index / 4) >= s.from && Math.floor(index / 4) <= s.to)?.name || 'Practice'} · bar ${Math.floor(index / 4) + 1} · beat ${index % 4 + 1}` : ticking ? 'Metronome running' : 'Ready when you are. Start after the count-in.';
+    document.querySelectorAll('[data-bar].study-bar, [data-bar].compact-bar').forEach(bar => bar.classList.toggle('active', !metronome && notes.length > 0 && Number(bar.dataset.bar) === Math.floor(index / 4)));
   }
   document.querySelectorAll('.note-chip').forEach(chip => chip.classList.toggle('active', !metronome && Number(chip.dataset.index) === index));
   document.querySelectorAll('.beat-dot').forEach((dot, i) => dot.classList.toggle('active', metronome && i === index % 4));
@@ -111,6 +111,7 @@ function route() {
     const candidate = Number(bits[2]);
     currentStep = Number.isInteger(candidate) && candidate >= 0 && candidate < currentLesson.steps.length ? candidate : firstUnfinishedStep(state, currentLesson.id);
     const tracks = currentLesson.steps[currentStep].tracks;
+    if (tracks?.sections) looping = false;
     studySelection = { hand: tracks?.events.some(e => e.hand === 'right') ? (tracks.events.some(e => e.hand === 'left') ? 'both' : 'right') : 'left', from: 0, to: tracks ? tracks.bars.length - 1 : 0, countIn: true };
     state.last = { lessonId: currentLesson.id, step: currentStep }; persist();
   } else { view = ['today', 'path', 'songs', 'chords', 'progress', 'scientist'].includes(bits[0]) ? bits[0] : 'today'; currentLesson = null; }
@@ -141,7 +142,7 @@ function lessonRow(l, index, compact = false) {
 function goalCard(type, compact = false) {
   const adele = type === 'adele'; const goalLessons = lessons.filter(l => type === 'scientist' ? l.chapter === 'scientist' : l.goal === type);
   const done = goalLessons.filter(l => isDone(state, l.id)).length;
-  return `<button class="goal-card ${adele ? 'adele' : 'coldplay'} ${compact ? 'compact' : ''}" data-action="goal" data-id="${type}"><span class="goal-art">${adele ? '<span class="orbit-disc"></span>' : '<span class="sky-moon"></span><span class="sky-stars">·　 ✧<br> ✦　 ·</span>'}</span><span class="goal-copy"><small>${adele ? 'ADELE' : 'COLDPLAY'}</small><strong>${adele ? 'Someone Like You' : 'The Scientist'}</strong><span>${done === goalLessons.length ? (adele ? 'Preparation complete' : 'Song path complete') : adele ? 'Your something-to-look-forward-to' : 'Opening phrases → whole simplified song'}</span></span>${icon('arrow')}</button>`;
+  return `<button class="goal-card ${adele ? 'adele' : 'coldplay'} ${compact ? 'compact' : ''}" data-action="goal" data-id="${type}"><span class="goal-art">${adele ? '<span class="orbit-disc"></span>' : '<span class="sky-moon"></span><span class="sky-stars">·　 ✧<br> ✦　 ·</span>'}</span><span class="goal-copy"><small>${adele ? 'ADELE' : 'COLDPLAY'}</small><strong>${adele ? 'Someone Like You' : 'The Scientist'}</strong><span>${done === goalLessons.length ? (adele ? 'Preparation complete' : 'Song path complete') : adele ? 'Your something-to-look-forward-to' : 'Chords → complete accompaniment'}</span></span>${icon('arrow')}</button>`;
 }
 function dashboard() {
   const resume = getLesson(state.last.lessonId); const started = countDone(state) > 0; const allDone = countDone(state) === totalCheckpoints;
@@ -160,7 +161,7 @@ function learningPath() {
 }
 function songsPage() {
   const songLessons = lessons.filter(l => l.song);
-  return `${title('SOMETHING YOU CAN HUM', 'Your song collection.', 'Start with a familiar little melody. Grow toward the songs you love.')}<div class="section-heading"><h2>Your first melodies</h2><span class="muted small">Listen, learn a phrase, make it yours.</span></div><div class="song-grid">${songLessons.map((l, i) => `<button class="song-tile song-${i}" data-action="lesson" data-id="${l.id}"><span class="song-tile-art">${icon(i === 1 ? 'leaf' : i === 2 ? 'music' : i === 3 ? 'star' : 'spark')}<span class="song-staff"></span><b>${['♪','♫','♩','✦'][i]}</b></span><span class="song-tile-body"><small>${i === 2 ? 'BEETHOVEN · SIMPLIFIED OPENING' : 'TRADITIONAL · BEGINNER MELODY'}</small><strong>${esc(l.song)}</strong><span>${isDone(state, l.id) ? '✓ Lesson completed' : `${l.duration} minutes · Right hand`}${icon('arrow')}</span></span></button>`).join('')}</div><div class="section-heading goal-heading"><h2>Your longer-term goals</h2><span class="tag">Built around your favourites</span></div><div class="goals-large">${goalCard('scientist')}${goalCard('adele')}</div><div class="song-explainer">${icon('music')}<p>The Scientist now has a dedicated song path: preparation, opening melody, both hands, chorus and a whole-song performance using Pianote’s linked reference. Adele currently has preparation exercises only.</p></div>`;
+  return `${title('SOMETHING YOU CAN HUM', 'Your song collection.', 'Start with a familiar little melody. Grow toward the songs you love.')}<div class="section-heading"><h2>Your first melodies</h2><span class="muted small">Listen, learn a phrase, make it yours.</span></div><div class="song-grid">${songLessons.map((l, i) => `<button class="song-tile song-${i}" data-action="lesson" data-id="${l.id}"><span class="song-tile-art">${icon(i === 1 ? 'leaf' : i === 2 ? 'music' : i === 3 ? 'star' : 'spark')}<span class="song-staff"></span><b>${['♪','♫','♩','✦'][i]}</b></span><span class="song-tile-body"><small>${i === 2 ? 'BEETHOVEN · SIMPLIFIED OPENING' : 'TRADITIONAL · BEGINNER MELODY'}</small><strong>${esc(l.song)}</strong><span>${isDone(state, l.id) ? '✓ Lesson completed' : `${l.duration} minutes · Right hand`}${icon('arrow')}</span></span></button>`).join('')}</div><div class="section-heading goal-heading"><h2>Your longer-term goals</h2><span class="tag">Built around your favourites</span></div><div class="goals-large">${goalCard('scientist')}${goalCard('adele')}</div><div class="song-explainer">${icon('music')}<p>The Scientist has ten in-app accompaniment lessons: chords, verse, chorus, transitions and a complete beginner performance for singing or humming. The vocal melody is not included in playback. Earlier score-based melody lessons remain optional. Adele currently has preparation exercises only.</p></div>`;
 }
 function progressPage() {
   const reviews = lessons.filter(l => state.review[l.id]);
@@ -169,10 +170,13 @@ function progressPage() {
     ['A tune to call your own', 'Finish your first melody lesson', isDone(state, 'first-tune'), 'music'],
     ['A little Beethoven', 'Complete the Ode to Joy opening', isDone(state, 'ode'), 'star'],
     ['Both hands together', 'Finish your first two-hand lesson', isDone(state, 'together'), 'hands'],
-    ['Foundations in place', 'Explore the original 26 foundation lessons', lessons.filter(l => l.chapter !== 'scientist').every(l => isDone(state, l.id)), 'leaf'],
-    ['Your first Coldplay melody', 'Play the opening song section', isDone(state, 'scientist-phrases'), 'music'],
-    ['Coldplay with both hands', 'Add bass to your opening phrases', isDone(state, 'scientist-support'), 'hands'],
-    ['A whole simplified song', 'Complete The Scientist performance checkpoints', isDone(state, 'scientist-performance'), 'star'],
+    ['Foundations in place', 'Explore the original 26 foundation lessons', lessons.filter(l => !['scientist', 'scientist-reference'].includes(l.chapter)).every(l => isDone(state, l.id)), 'leaf'],
+    ['Your first Coldplay accompaniment', 'Play a complete introduction', isDone(state, 'scientist-play-intro'), 'music'],
+    ['A verse and chorus', 'Keep both sections moving', isDone(state, 'scientist-play-verse') && isDone(state, 'scientist-play-chorus'), 'hands'],
+    ['A complete accompaniment', 'Play the whole beginner performance route', isDone(state, 'scientist-play-performance'), 'star'],
+    ['Your first Coldplay melody', 'Optional score route: opening song section', isDone(state, 'scientist-phrases'), 'music'],
+    ['Coldplay with both hands', 'Optional score route: melody with bass', isDone(state, 'scientist-support'), 'hands'],
+    ['A whole simplified song', 'Optional score route: complete performance', isDone(state, 'scientist-performance'), 'star'],
   ];
   return `${title('LOOK AT YOUR LITTLE WINS', 'This is what progress looks like.', 'Every comfortable note counts. There’s no deadline here.')}<section class="progress-overview"><div class="progress-ring" style="--progress:${progressPercent(state)}%"><span><strong>${progressPercent(state)}<small>%</small></strong><span>of your learning path</span></span></div><div><h2>${completedLessons(state) === lessons.length ? 'A beautiful beginning.' : countDone(state) ? 'You’re making music happen.' : 'Your first little win is waiting.'}</h2><p>${countDone(state)} of ${totalCheckpoints} checkpoints · ${completedLessons(state)} of ${lessons.length} lessons complete</p><p class="muted">${state.days.length} practice days · ${Math.floor(state.practiceSeconds / 60)} minutes in the practice room</p><button class="button primary" data-action="resume">Back to the keys ${icon('arrow')}</button><small class="time-note">Time counts while the practice page is visible, not verified playing time.</small></div></section><div class="section-heading"><h2>Milestones, not deadlines</h2></div><div class="milestone-grid">${milestones.map(([name, desc, earned, ico]) => `<div class="milestone ${earned ? 'earned' : ''}"><span>${icon(ico)}</span><strong>${name}</strong><p>${desc}</p><small>${earned ? '✓ Reached' : 'Something to look forward to'}</small></div>`).join('')}</div><div class="dashboard-columns progress-bottom"><section><div class="section-heading"><h2>A little more practice</h2><span class="tag">${reviews.length} saved</span></div>${reviews.length ? `<div class="review-list">${reviews.map(l => `<div>${lessonRow(l, lessons.indexOf(l), true)}<button class="text-button" data-action="unflag" data-id="${l.id}" aria-label="Remove ${esc(l.title)} from practice list">${icon('check')} Feeling comfortable now</button></div>`).join('')}</div>` : `<div class="empty-state">${icon('flag')}<h3>Your practice-again list</h3><p>Mark any lesson “Practise again” and we’ll keep it here for you.</p></div>`}</section><section class="backup-card"><span class="chapter-icon purple">${icon('save')}</span><h2>A safe place for your progress</h2><p>Your checkpoints and practice speeds are saved in this browser on this laptop. Export a backup before clearing browser data, changing browsers, or moving computers.</p><div class="backup-actions"><button class="button secondary" data-action="export">${icon('download')} Export backup</button><button class="button quiet" data-action="import">${icon('upload')} Import backup</button></div><small>${state.updatedAt ? `Last saved: ${new Date(state.updatedAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}` : 'Your progress saves as you go.'}</small></section></div>`;
 }
@@ -265,7 +269,7 @@ function completedCheckpoint() {
   const finished = completeStep(state, l.id, currentStep);
   if (!state.days.includes(localDay())) state.days.push(localDay()); persist();
   if (finished) {
-    const next = nextLesson(state); render();
+    const next = nextLesson(state, l.id); render();
     showModal(`<span class="modal-symbol celebration">${icon('star')}</span><div class="eyebrow">${wasDone ? 'A LITTLE PRACTICE GOES A LONG WAY' : 'A LITTLE WIN WORTH CELEBRATING'}</div><h2>${next ? 'Look at you, making music.' : 'Your foundations are in place.'}</h2><p>You’ve ${wasDone ? 'revisited' : 'completed'} <strong>${esc(l.title.replace(/\.$/, ""))}</strong>. ${storageWarning ? 'Export a backup to keep this progress safe.' : 'All four checkpoints are saved.'}</p><div class="completion-stat"><strong>${completedLessons(state)}</strong><span>of ${lessons.length} lessons complete</span>${icon('leaf')}</div><p>You can stop here and come back whenever you like.</p><div class="modal-actions">${next ? `<button class="button primary" data-action="lesson" data-id="${next.id}">Next lesson ${icon('arrow')}</button>` : '<button class="button primary" data-action="progress">See your progress</button>'}<button class="button secondary" data-action="home">Done for today</button></div>`);
   } else { goLesson(l.id, state.last.step); toast(storageWarning ? 'Checkpoint complete. Export a backup to keep it safe.' : 'Little win saved. One step further.'); }
 }
@@ -274,6 +278,15 @@ document.addEventListener('click', async event => {
   const button = event.target.closest('[data-action]'); if (!button || button.disabled) return;
   const { action, id } = button.dataset;
   if (action === 'source') { stopAudio(); return; }
+  if (action === 'study-section') {
+    const tracks = currentLesson?.steps[currentStep]?.tracks;
+    if (!tracks?.sections) return;
+    const section = tracks.sections.find(s => s.id === button.dataset.section);
+    stopAudio();
+    studySelection.from = section ? section.from : 0;
+    studySelection.to = section ? section.to : tracks.bars.length - 1;
+    render(); return;
+  }
   if (action === 'ear-reveal' && currentLesson?.steps[currentStep].mode === 'ear') {
     stopAudio(); earRevealed = !earRevealed; render();
     document.querySelector('[data-action="ear-reveal"]')?.focus({ preventScroll: true });

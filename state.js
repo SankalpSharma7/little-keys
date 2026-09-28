@@ -1,4 +1,5 @@
 import { lessons, getLesson, totalCheckpoints } from './curriculum.js';
+import { scientistAccompanimentPath } from './scientist-accompaniment.js';
 import { defaultPlayground, validatePlayground } from './chords.js';
 
 export const STORAGE_KEY = 'little-keys.progress.v1';
@@ -8,7 +9,14 @@ export const isDone = (state, lessonId) => (state.completed[lessonId]?.length ||
 export const completedLessons = state => lessons.filter(l => isDone(state, l.id)).length;
 export const progressPercent = state => Math.round(countDone(state) / totalCheckpoints * 100);
 export const firstUnfinishedStep = (state, id) => Math.max(0, getLesson(id).steps.findIndex((_, i) => !state.completed[id]?.includes(i)));
-export const nextLesson = state => lessons.find(l => !isDone(state, l.id));
+export function nextLesson(state, afterId) {
+  const index = scientistAccompanimentPath.findIndex(l => l.id === afterId);
+  if (index >= 0) {
+    const next = scientistAccompanimentPath.slice(index + 1).find(l => !isDone(state, l.id));
+    if (next) return getLesson(next.id);
+  }
+  return lessons.find(l => l.chapter !== 'scientist-reference' && !isDone(state, l.id)) || lessons.find(l => !isDone(state, l.id));
+}
 export function completeStep(state, id, index) {
   const l = getLesson(id);
   if (!l || !Number.isInteger(index) || index < 0 || index >= l.steps.length) throw new Error('Unknown checkpoint');
@@ -16,7 +24,7 @@ export function completeStep(state, id, index) {
   const unfinished = l.steps.findIndex((_, i) => !state.completed[id].includes(i));
   if (unfinished >= 0) state.last = { lessonId: id, step: unfinished };
   else {
-    const next = nextLesson(state);
+    const next = nextLesson(state, id);
     state.last = next ? { lessonId: next.id, step: firstUnfinishedStep(state, next.id) } : { lessonId: id, step: index };
   }
   return isDone(state, id);

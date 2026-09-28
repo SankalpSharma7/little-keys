@@ -1,4 +1,5 @@
 import { scientistLessons } from './scientist.js';
+import { accompanimentLessons } from './scientist-accompaniment.js';
 // Demonstration melodies below are traditional/public-domain. Song-goal drills
 // are original technique exercises, not transcriptions of commercial recordings.
 export const chapters = [
@@ -8,7 +9,8 @@ export const chapters = [
   { id: 'chords', name: 'Make friends with chords', subtitle: 'Discover the sounds underneath your favourite songs.', icon: 'keys', color: 'purple' },
   { id: 'hands', name: 'Bring both hands together', subtitle: 'Build coordination slowly and comfortably.', icon: 'hands', color: 'peach' },
   { id: 'songs', name: 'Toward your favourite songs', subtitle: 'Practise the building blocks of Coldplay and Adele.', icon: 'star', color: 'green' },
-  { id: 'scientist', name: 'Play The Scientist', subtitle: 'Your first recognisable phrases, then a whole simplified song with a linked reference.', icon: 'music', color: 'green' },
+  { id: 'scientist', name: 'The Scientist: play the accompaniment', subtitle: 'Ten lessons from chord shapes to an entire beginner performance. All practice guides are here.', icon: 'music', color: 'green' },
+  { id: 'scientist-reference', name: 'Optional: melody with a score', subtitle: 'Your earlier score-based lessons and saved checkpoints remain available here.', icon: 'music', color: 'purple' },
   { id: 'ear', name: 'Start playing by ear', subtitle: 'A later skill: listen, experiment, and check your own answers.', icon: 'volume', color: 'purple' },
 ];
 
@@ -172,7 +174,9 @@ export const lessons = [
     step('Make your own short performance', 'Choose either our C pattern or Am pattern. Play it four times with a steady, comfortable pulse. Start gently and finish deliberately. You can loop this C demonstration or revisit the previous step for Am.', 'One simple pattern played with care is music.', 'C3+C4 E4 G4 E4', { bass: 'C3' }),
     step('Your next chapter', 'Choose a beginner arrangement of “Someone Like You” that you own or can legally access. Begin with one small right-hand pattern, then its bass note. Use the same listen → separate hands → combine → repeat approach. Keep revisiting the drills that help.', 'Celebrate: you have explored notes, rhythm, tunes, chords, and both hands.', 'C4 E4 G4 E4 C4+E4+G4:4', { task: 'Finish the foundations course' }),
   ], { bpm: 45, goal: 'adele', duration: 15 }),
-  ...scientistLessons,
+  ...scientistLessons.slice(0, 3),
+  ...accompanimentLessons,
+  ...scientistLessons.slice(3).map(l => ({ ...l, chapter: 'scientist-reference' })),
   lesson('playing-by-ear', 'ear', 'Work out a tiny tune by ear', 'A separate skill for later: find a few notes from sound, with hints and answers when you want them.', 'Try this after you feel comfortable finding C, D, and E and playing the earlier melodies. This is a new skill, so use several sessions if needed. You can reveal every answer without losing progress. The app cannot hear your Casio; you compare the sounds yourself.', [
     step('Hear which way the sound moves', 'Press “Play the mystery” to hear two notes. Decide whether the second sound goes higher, lower, or stays the same. You do not need to name it yet. Listen again, hum the two sounds if comfortable, and then reveal the answer. This lesson intentionally hides the notes: it is different from the earlier guided lessons.', 'Start with the direction of the sound, not a whole song.', 'C4:2 E4:2', { mode: 'ear', hint: 'The first sound is middle C. Hear that reference, then notice whether the second sound feels above or below it.', reference: 'C4', answer: 'It goes higher: C4 → E4. On the keyboard, E is to the right of C.', task: 'I compared the direction and checked the answer' }),
     step('Find one note from three choices', 'Play the mystery note, then try C4, D4, and E4 on your Casio one at a time. Replay the mystery between attempts. Which key sounds like the same pitch? Keep the keyboard on a piano tone at its standard pitch; the guide and Casio may have different tone colours. Reveal the answer when you want to compare.', 'Your possible keys are C4, D4, and E4. Take your time comparing them.', 'D4:3', { mode: 'ear', hint: 'Compare the mystery with middle C. It is one white-key step higher.', reference: 'C4', answer: 'The note is D4. Use your right index finger if your thumb is resting on C4.', task: 'I tried the candidate keys and checked my match' }),
