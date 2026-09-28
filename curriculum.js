@@ -7,6 +7,7 @@ export const chapters = [
   { id: 'chords', name: 'Make friends with chords', subtitle: 'Discover the sounds underneath your favourite songs.', icon: 'keys', color: 'purple' },
   { id: 'hands', name: 'Bring both hands together', subtitle: 'Build coordination slowly and comfortably.', icon: 'hands', color: 'peach' },
   { id: 'songs', name: 'Toward your favourite songs', subtitle: 'Practise the building blocks of Coldplay and Adele.', icon: 'star', color: 'green' },
+  { id: 'ear', name: 'Start playing by ear', subtitle: 'A later skill: listen, experiment, and check your own answers.', icon: 'volume', color: 'purple' },
 ];
 
 export function phrase(notes, beats = 1) {
@@ -15,7 +16,7 @@ export function phrase(notes, beats = 1) {
     return { notes: pitch === '-' ? [] : pitch.split('+'), beats: duration ? Number(duration) : beats };
   });
 }
-const step = (title, body, cue, notes, extra = {}) => ({ title, body, cue, pattern: phrase(notes), ...extra });
+const step = (title, body, cue, notes, extra = {}) => ({ title, body, cue, pattern: phrase(notes), mode: 'guided', ...extra });
 const lesson = (id, chapter, title, description, tip, steps, extra = {}) => ({ id, chapter, title, description, tip, steps, duration: 12, bpm: 60, ...extra });
 
 export const lessons = [
@@ -38,8 +39,8 @@ export const lessons = [
     step('A little skipping game', 'Play C–E–G–E–C. You skip over D and F. Keep your fingers resting near their keys; use thumb, middle finger, and little finger.', 'Right hand: 1 · 3 · 5 · 3 · 1.', 'C4 E4 G4 E4 C4:2'),
   ]),
   lesson('first-tune', 'start', 'Your first little tune', 'Play “Hot Cross Buns” using just the three notes you know.', 'You can finish a lesson slowly. Comfortable and repeatable matters more than fast.', [
-    step('Listen to the tune', 'Listen once and notice the repeated opening. This traditional tune uses E, D, and C. Put your right fingers 3, 2, and 1 over those keys.', 'Listen first. Then sing or hum along if you like.', 'E4:2 D4:2 C4:4 E4:2 D4:2 C4:4 C4 C4 C4 C4 D4 D4 D4 D4 E4:2 D4:2 C4:4'),
-    step('Learn the first phrase', 'Play E–D–C, letting the C last longer. Repeat the same phrase. Count “1, 2” for E and D; count four beats for C.', 'E (2 beats) · D (2) · C (4), then repeat.', 'E4:2 D4:2 C4:4 E4:2 D4:2 C4:4'),
+    step('Listen to the tune', 'Press “Play the example” and listen once to “Hot Cross Buns”. Notice that its opening repeats and that some notes last longer. Rest your hands for now: you do not need to play, name the notes, or work them out by ear. The next checkpoint gives you the exact keys and fingers.', 'Your task is only to get familiar with how the tune sounds. Humming is optional.', 'E4:2 D4:2 C4:4 E4:2 D4:2 C4:4 C4 C4 C4 C4 D4 D4 D4 D4 E4:2 D4:2 C4:4'),
+    step('Learn the first phrase', 'Put your right thumb on middle C (C4), index finger on D4, and middle finger on E4. Play E with your middle finger, D with your index, then C with your thumb. Press E once and hold while counting “1, 2”; do the same for D; hold C while counting “1, 2, 3, 4”. Repeat E–D–C. You can pause between notes while finding the keys.', 'E: middle finger, 2 beats → D: index, 2 beats → C: thumb, 4 beats.', 'E4:2 D4:2 C4:4 E4:2 D4:2 C4:4'),
     step('Learn the second phrase', 'Play four Cs, then four Ds, using one beat for each note. Finish with E–D–C, holding those notes as in the opening.', 'C C C C · D D D D · E— D— C——.', 'C4 C4 C4 C4 D4 D4 D4 D4 E4:2 D4:2 C4:4'),
     step('Put your tune together', 'Play the two opening phrases, then four Cs, four Ds, and the ending. Pause between sections if needed. You have learned a complete little melody.', 'Try one full run, then celebrate your first tune.', 'E4:2 D4:2 C4:4 E4:2 D4:2 C4:4 C4 C4 C4 C4 D4 D4 D4 D4 E4:2 D4:2 C4:4'),
   ], { duration: 15, song: 'Hot Cross Buns' }),
@@ -68,19 +69,19 @@ export const lessons = [
     step('Shape a musical sentence', 'Play C–D–E–G–E–D–C. Start softly, let the middle grow slightly, and finish softly. There is no volume score: use your ears.', 'Make the last C sound like the end of a sentence.', 'C4 D4 E4 G4:2 E4 D4 C4:4'),
   ]),
   lesson('mary', 'melodies', 'A melody you already know', 'Learn “Mary Had a Little Lamb” in two small pieces.', 'Humming before playing can help you remember a phrase. Use right-hand fingers 1=C, 2=D, 3=E, 5=G.', [
-    step('Listen and map the notes', 'Listen for the opening E–D–C–D. The tune mostly uses three notes, with a brief visit to G. Place your right hand over C–G.', 'Listen once without trying to keep up.', 'E4 D4 C4 D4 E4 E4 E4:2 D4 D4 D4:2 E4 G4 G4:2'),
+    step('Listen to the opening', 'Play the example to hear the first part of “Mary Had a Little Lamb”. Listen for the repeated notes and short pauses between musical phrases. Keep your hands relaxed; you are not expected to play along or identify any keys from the sound. The notes and finger positions will be provided for practice.', 'Listen once. The next checkpoint teaches the first phrase with the notes shown.', 'E4 D4 C4 D4 E4 E4 E4:2 D4 D4 D4:2 E4 G4 G4:2'),
     step('The first line', 'Play E–D–C–D, then E three times. Hold the final E for two beats. Practise until your hand can stay relaxed.', 'Fingers: 3 · 2 · 1 · 2 · 3 · 3 · 3.', 'E4 D4 C4 D4 E4 E4 E4:2'),
     step('The middle and ending', 'First practise D–D–D, E–G–G. Then play the opening again and finish E–D–D–E–D–C. The demonstration here combines the middle and final line.', 'Slow down before the jump from E to G.', 'D4 D4 D4:2 E4 G4 G4:2 E4 D4 C4 D4 E4 E4 E4 E4 D4 D4 E4 D4 C4:4'),
     step('Play the complete melody', 'Join the opening, middle, and ending. If one transition trips you up, repeat just the two notes around it before another full try.', 'Take a breath before you start.', 'E4 D4 C4 D4 E4 E4 E4:2 D4 D4 D4:2 E4 G4 G4:2 E4 D4 C4 D4 E4 E4 E4 E4 D4 D4 E4 D4 C4:4'),
   ], { song: 'Mary Had a Little Lamb', duration: 15 }),
   lesson('ode', 'melodies', 'A little Beethoven', 'Play the familiar opening theme of “Ode to Joy”.', 'This is a simplified melody, not the full orchestral work. Your C–G hand position is enough for this opening theme.', [
-    step('Hear the opening', 'Listen for repeated notes and the gentle rise to G. Put your right hand over C–G. Hum the first phrase if it helps.', 'E · E · F · G | G · F · E · D.', 'E4 E4 F4 G4 G4 F4 E4 D4'),
+    step('Hear the opening', 'Play the example and listen for repeated sounds and the rise and fall of the tune. Humming is optional. You do not need to find any keys yet: the next checkpoint gives you the notes E–E–F–G, G–F–E–D and tells you which fingers to use.', 'Just listen to this short opening. No guessing and no playing along yet.', 'E4 E4 F4 G4 G4 F4 E4 D4'),
     step('Practise the first half', 'Play E–E–F–G, then G–F–E–D. Use fingers 3–3–4–5, 5–4–3–2. Keep each note the same length.', 'Two little groups of four notes.', 'E4 E4 F4 G4 G4 F4 E4 D4'),
     step('Practise the answer', 'Play C–C–D–E, then E–D–D. The first E in the ending lasts one and a half beats, the following D half a beat, and the last D two beats. Listen slowly to copy that rhythm.', 'C · C · D · E | E (1½) · D (½) · D (2).', 'C4 C4 D4 E4 E4:1.5 D4:0.5 D4:2'),
     step('Play the opening theme', 'Join both halves. A half-beat note is shorter, not necessarily louder. You can practise the pitches freely before following the exact rhythm.', 'Your first Beethoven milestone: one complete opening phrase.', 'E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 E4:1.5 D4:0.5 D4:2'),
   ], { song: 'Ode to Joy · opening theme', duration: 15, bpm: 55 }),
   lesson('twinkle', 'melodies', 'A little reach for the stars', 'Learn “Twinkle, Twinkle, Little Star” and meet A.', 'Avoid stretching to reach A. For the opening, try thumb on C, ring finger on G, little finger on A; let your hand move naturally.', [
-    step('Meet A and hear the opening', 'A is the white key immediately to the right of G. Listen to C–C–G–G–A–A–G. This melody travels farther than your five-note position.', 'The final G lasts two beats.', 'C4 C4 G4 G4 A4 A4 G4:2'),
+    step('Hear the opening first', 'Play the example and listen to the opening of “Twinkle, Twinkle, Little Star”. This tune will use A, the white key immediately to the right of G. For now, only listen; you do not need to search for the notes. The next checkpoint shows C–C–G–G–A–A–G and helps you position your hand.', 'Notice that the last sound is held longer. You will play in the next checkpoint.', 'C4 C4 G4 G4 A4 A4 G4:2'),
     step('Play the opening and answer', 'Practise the opening with fingers 1–1–4–4–5–5–4 if comfortable. Then settle back into the C–G position for F–F–E–E–D–D–C.', 'Move your hand gently instead of holding a wide stretch.', 'C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2'),
     step('The middle section', 'Play G–G–F–F–E–E–D, holding D for two beats. Repeat that phrase. Use the familiar C–G hand position.', 'The middle is the same phrase twice.', 'G4 G4 F4 F4 E4 E4 D4:2 G4 G4 F4 F4 E4 E4 D4:2'),
     step('Put all three sections together', 'Play the opening and answer, the middle section, then the opening and answer again. Breaks between sections are fine while learning.', 'Opening → middle → opening again.', 'C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2 G4 G4 F4 F4 E4 E4 D4:2 G4 G4 F4 F4 E4 E4 D4:2 C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2'),
@@ -146,7 +147,7 @@ export const lessons = [
     step('Switch after a breathing space', 'Play one C pattern, rest and find F, then play one F pattern. For this transition drill, the demo uses shorter bass notes. On your keyboard, hold each bass through its four-note pattern.', 'C pattern → pause → F pattern.', 'C3+C4 E4 G4 E4 -:2 F3+F4 A4 C5 A4'),
   ], { bpm: 45, duration: 15 }),
   lesson('scientist-prep', 'songs', 'The Scientist: build the foundation', 'Practise measured chords and steady changes for your Coldplay goal.', 'This is an original preparation exercise, not the melody or actual chord arrangement of “The Scientist”. A beginner arrangement is the next bridge to the song.', [
-    step('Listen for the job of the piano', 'Play a recording of “The Scientist” from your own music service if available. Listen to how repeating piano chords support the voice. Then hear our short original chord drill below.', 'Notice the steady accompaniment. You do not need to copy it yet.', 'C4+E4+G4:2 C4+E4+G4:2 A3+C4+E4:2 A3+C4+E4:2'),
+    step('Listen for the job of the keyboard', 'Play the example to hear our original repeating-chord exercise. Just notice its steady pulse; you are not expected to name the chords or copy them by ear. Optionally listen to your own recording of “The Scientist” to hear how its piano part supports the voice. Our exercise is not the song; the next checkpoint shows exactly which chord notes to play.', 'Listen now. Follow the provided chord notes when you reach the playing checkpoint.', 'C4+E4+G4:2 C4+E4+G4:2 A3+C4+E4:2 A3+C4+E4:2'),
     step('Repeat a chord without rushing', 'Play a C chord on beats 1 and 3 of a four-beat count. Keep the two presses equal in volume. Repeat with Am.', 'Count 1–2–3–4. Play on 1 and 3.', 'C4+E4+G4:2 C4+E4+G4:2 A3+C4+E4:2 A3+C4+E4:2'),
     step('Change the shape on time', 'Practise C–Am–F–G, playing each chord twice. This general progression is a technique drill, not the song’s progression. Slow down at the hardest transition.', 'Two presses per chord, no hurry between shapes.', 'C4+E4+G4:2 C4+E4+G4:2 A3+C4+E4:2 A3+C4+E4:2 F3+A3+C4:2 F3+A3+C4:2 G3+B3+D4:2 G3+B3+D4:2'),
     step('Make it sound like a phrase', 'Play the drill softly once, then a little fuller. Keep the tempo the same. Your milestone is a steady accompaniment pattern you can repeat comfortably.', 'Feel the phrase, keep the pulse.', 'C4+E4+G4:2 C4+E4+G4:2 A3+C4+E4:2 A3+C4+E4:2 F3+A3+C4:2 F3+A3+C4:2 G3+B3+D4:2 G3+B3+D4:2'),
@@ -158,7 +159,7 @@ export const lessons = [
     step('Choose your next song step', 'Try two comfortable rounds. Then use a beginner arrangement of “The Scientist” that you own or can legally access. Start with only its first two chords, checking its key and fingering rather than assuming this drill matches.', 'You have built a foundation for learning the real arrangement.', 'C3+C4+E4+G4:4 A3+A4+C5+E5:4 F3+F4+A4+C5:4 G3+G4+B4+D5:4'),
   ], { bpm: 45, goal: 'scientist', duration: 15 }),
   lesson('adele-prep', 'songs', 'Someone Like You: find the flow', 'Build even, repeating broken chords for your Adele goal.', 'This original white-key exercise develops the motion of a flowing accompaniment. It is not a transcription or the original key of “Someone Like You”.', [
-    step('Hear a repeating shape', 'Listen to our C–E–G–E pattern. If you listen to “Someone Like You” separately, notice the flowing repeated accompaniment underneath the voice. Focus on the feeling of even notes.', 'Our drill: one gentle note on each beat.', 'C4 E4 G4 E4 C4 E4 G4 E4'),
+    step('Hear a repeating shape', 'Play the example to hear our original flowing-note exercise. Listen to the even spacing between sounds. You do not need to identify the notes by ear or play along yet; the next checkpoint gives you C–E–G–E and the fingers to use. Optionally listen to “Someone Like You” separately to notice its flowing accompaniment. This exercise is not a transcription of the song.', 'Listen only: one gentle sound on each beat. The keys are provided when you practise.', 'C4 E4 G4 E4 C4 E4 G4 E4'),
     step('Keep four notes even', 'Play C–E–G–E repeatedly with fingers 1–3–5–3. Keep your thumb from landing noticeably louder. Stop and relax between rounds.', 'An even sound matters more than speed.', 'C4 E4 G4 E4 C4 E4 G4 E4'),
     step('Move the repeating pattern', 'Play C–E–G–E, then A–C–E–C below it. Practise the move without the metronome before adding a slow pulse.', 'C pattern → Am pattern.', 'C4 E4 G4 E4 A3 C4 E4 C4'),
     step('Find a comfortable flow', 'Join C, Am, F, and G broken chords. This is an original practice progression. Loop it slowly, then try without looking at the screen for the first pattern.', 'Let each four-note shape feel familiar.', 'C4 E4 G4 E4 A3 C4 E4 C4 F3 A3 C4 A3 G3 B3 D4 B3'),
@@ -169,7 +170,45 @@ export const lessons = [
     step('Make your own short performance', 'Choose either our C pattern or Am pattern. Play it four times with a steady, comfortable pulse. Start gently and finish deliberately. You can loop this C demonstration or revisit the previous step for Am.', 'One simple pattern played with care is music.', 'C3+C4 E4 G4 E4', { bass: 'C3' }),
     step('Your next chapter', 'Choose a beginner arrangement of “Someone Like You” that you own or can legally access. Begin with one small right-hand pattern, then its bass note. Use the same listen → separate hands → combine → repeat approach. Keep revisiting the drills that help.', 'Celebrate: you have explored notes, rhythm, tunes, chords, and both hands.', 'C4 E4 G4 E4 C4+E4+G4:4', { task: 'Finish the foundations course' }),
   ], { bpm: 45, goal: 'adele', duration: 15 }),
+  lesson('playing-by-ear', 'ear', 'Work out a tiny tune by ear', 'A separate skill for later: find a few notes from sound, with hints and answers when you want them.', 'Try this after you feel comfortable finding C, D, and E and playing the earlier melodies. This is a new skill, so use several sessions if needed. You can reveal every answer without losing progress. The app cannot hear your Casio; you compare the sounds yourself.', [
+    step('Hear which way the sound moves', 'Press “Play the mystery” to hear two notes. Decide whether the second sound goes higher, lower, or stays the same. You do not need to name it yet. Listen again, hum the two sounds if comfortable, and then reveal the answer. This lesson intentionally hides the notes: it is different from the earlier guided lessons.', 'Start with the direction of the sound, not a whole song.', 'C4:2 E4:2', { mode: 'ear', hint: 'The first sound is middle C. Hear that reference, then notice whether the second sound feels above or below it.', reference: 'C4', answer: 'It goes higher: C4 → E4. On the keyboard, E is to the right of C.', task: 'I compared the direction and checked the answer' }),
+    step('Find one note from three choices', 'Play the mystery note, then try C4, D4, and E4 on your Casio one at a time. Replay the mystery between attempts. Which key sounds like the same pitch? Keep the keyboard on a piano tone at its standard pitch; the guide and Casio may have different tone colours. Reveal the answer when you want to compare.', 'Your possible keys are C4, D4, and E4. Take your time comparing them.', 'D4:3', { mode: 'ear', hint: 'Compare the mystery with middle C. It is one white-key step higher.', reference: 'C4', answer: 'The note is D4. Use your right index finger if your thumb is resting on C4.', task: 'I tried the candidate keys and checked my match' }),
+    step('Find a three-note phrase', 'This mystery starts on middle C and uses only C4, D4, and E4. Listen to all three sounds, then replay and find the second sound before adding the third. Use your right thumb, index, and middle finger on C, D, and E. You can hear the starting note separately or open a hint. Reveal the notes after your attempt.', 'Start at the given C. Find the next sound, then the next; pauses are welcome.', 'C4:2 E4:2 D4:2', { mode: 'ear', hint: 'From C, the phrase skips up to the highest of your three keys, then steps down one white key.', reference: 'C4', answer: 'C4 → E4 → D4. Right hand: thumb (1) → middle (3) → index (2). Each note lasts two beats.', task: 'I tried finding the phrase and compared it with the answer' }),
+    step('Work out the opening of a tune', 'Listen to this short melody without the note guide. It starts on E4 and uses only C4, D4, and E4. Hum it if helpful. Find the first three notes on your Casio, then add the next few. Work on the pitches first and the rhythm afterward. You may recognise it from an earlier lesson; remembering is helpful, but compare what you play with what you hear.', 'This is one short song phrase, not a test of working out a full arrangement.', 'E4 D4 C4 D4 E4 E4 E4:2', { mode: 'ear', hint: 'It starts with three descending notes, climbs back to its starting note, then repeats that note. The final sound lasts two beats.', reference: 'E4', answer: 'The opening of “Mary Had a Little Lamb”: E4 → D4 → C4 → D4 → E4 → E4 → E4. Fingers: 3–2–1–2–3–3–3. All notes last one beat except the final E, held for two.', task: 'I explored a song phrase by ear and checked it' }),
+  ], { bpm: 55, duration: 15 }),
 ];
+
+// Explicit teaching modes: hearing an example never implies guessing its notes.
+const listenLessons = ['first-tune', 'mary', 'ode', 'twinkle', 'scientist-prep', 'adele-prep'];
+for (const id of listenLessons) lessons.find(l => l.id === id).steps[0].mode = 'listen';
+lessons[0].steps[0].mode = 'explore';
+lessons[0].steps[1].mode = 'explore';
+lessons.find(l => l.id === 'steady-beat').steps[0].mode = 'rhythm';
+
+const rightFive = 'Right hand: thumb (1) on C4, index (2) on D4, middle (3) on E4, ring (4) on F4, little finger (5) on G4.';
+const handGuides = {
+  welcome: 'Right hand: thumb (1) on middle C (C4), index (2) on D4, middle finger (3) on E4.',
+  cde: 'Right hand: thumb (1) on middle C (C4), index (2) on D4, middle finger (3) on E4.',
+  'five-notes': rightFive, 'first-tune': 'Right hand: thumb (1) on C4, index (2) on D4, middle finger (3) on E4. Start the phrase on E with your middle finger.',
+  'steady-beat': rightFive, 'long-short': rightFive, rests: rightFive, expression: rightFive, mary: rightFive, ode: rightFive,
+  twinkle: 'For C–G–A, try right thumb (1) on C4, ring finger (4) on G4, little finger (5) on A4. For the descending F–E–D–C phrase, return to the C–G five-finger position. Move gently; do not hold a wide stretch.',
+  'note-map': 'Use any comfortable finger to explore these note locations. C4 is middle C; C5 is the next C to its right. The small octave numbers are not finger numbers.',
+  'c-chord': 'Right hand: thumb (1) on C4, middle (3) on E4, little finger (5) on G4. A plus sign means press the notes together.',
+  'am-f': 'Right hand, fingers 1–3–5 from low to high. Am: A3–C4–E4. F: F3–A3–C4. Move your whole hand between shapes.',
+  'g-changes': 'Right hand, fingers 1–3–5 from low to high. C: C4–E4–G4; G: G3–B3–D4; Am: A3–C4–E4; F: F3–A3–C4.',
+  'broken-chords': 'Right hand: thumb (1) plays the lowest note, middle (3) the middle note, little finger (5) the highest. Play 1–3–5–3 for each four-note pattern.',
+  'chord-play': 'Right hand: use fingers 1–3–5 on the lowest, middle, and highest notes of each chord. The chord playground shows the exact keys for each shape.',
+  'left-hand': 'Left hand for C3–G3: little finger (5) on C3, ring (4) on D3, middle (3) on E3, index (2) on F3, thumb (1) on G3. Move freely for the later bass-note exercise.',
+  together: 'Left little finger (5) on C3. Right thumb (1) on C4, index (2) on D4, middle (3) on E4. Follow the step to see whether the hands alternate or play together.',
+  'bass-chords': 'Left hand plays the single lower root note with a comfortable finger. Right hand plays the upper three-note chord using fingers 1–3–5 from low to high.',
+  'hands-flow': 'Left hand holds the lower note. Right hand uses fingers 1–3–5–3 for the four upper notes. Practise each hand separately before combining.',
+  'scientist-prep': 'Right hand, fingers 1–3–5. C: C4–E4–G4; Am: A3–C4–E4; F: F3–A3–C4; G: G3–B3–D4. The guide supplies these notes; no ear guessing is needed.',
+  'scientist-both': 'Left hand plays the single lower note. Right fingers 1–3–5 play the three upper chord notes shown in each note card.',
+  'adele-prep': 'Right hand: use fingers 1–3–5–3 on the lowest, middle, highest, and middle notes of each chord. Begin with C4–E4–G4–E4.',
+  'adele-both': 'Left hand holds the lower note. Right hand uses fingers 1–3–5–3 for the upper pattern. Start with C4–E4–G4–E4 or the Am shape specified in the step.',
+};
+for (const l of lessons) l.handGuide = handGuides[l.id] || '';
+lessons.find(l => l.id === 'twinkle').steps[2].handGuide = rightFive;
 
 export const getLesson = id => lessons.find(l => l.id === id);
 export const totalCheckpoints = lessons.reduce((sum, l) => sum + l.steps.length, 0);

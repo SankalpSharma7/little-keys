@@ -3,6 +3,8 @@ import { loadState, saveState, validateState, countDone, isDone, completedLesson
 import { PianoAudio } from './audio.js';
 import { chords, getChord, styles as chordStyles, chordPattern } from './chords.js';
 import { playgroundPage, fingerGuide } from './playground.js';
+import { renderLesson } from './lesson-view.js';
+import { stepGuidance, hideEarAnswer } from './lesson-guidance.js';
 
 const icons = {
   home: '<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/>',
@@ -41,6 +43,8 @@ let protectUnreadableSave = Boolean(loaded.error);
 let view = 'today';
 let currentLesson = null;
 let currentStep = 0;
+let earRevealed = false;
+let earHintShown = false;
 let playing = false;
 let ticking = false;
 let looping = false;
@@ -60,7 +64,8 @@ const audio = new PianoAudio((notes, index, metronome) => {
     const status = document.querySelector('#chord-playing');
     if (status) status.textContent = event ? `${chordPlaybackMode === 'sequence' ? `Bar ${event.bar + 1} of 4 · ` : ''}${getChord(event.chord).name} · ${chordStyles.find(s => s.id === state.playground.style).hint}` : 'Ready when you are. Listen once, then try on your Casio.';
   }
-  document.querySelectorAll('.piano-key').forEach(key => key.classList.toggle('sounding', notes.includes(key.dataset.note)));
+  const answerHidden = view === 'lesson' && hideEarAnswer(currentLesson?.steps[currentStep], earRevealed);
+  document.querySelectorAll('.piano-key').forEach(key => key.classList.toggle('sounding', !answerHidden && notes.includes(key.dataset.note)));
   document.querySelectorAll('.note-chip').forEach(chip => chip.classList.toggle('active', !metronome && Number(chip.dataset.index) === index));
   document.querySelectorAll('.beat-dot').forEach((dot, i) => dot.classList.toggle('active', metronome && i === index % 4));
   const active = document.querySelector('.note-chip.active');
@@ -91,6 +96,7 @@ function goLesson(id, index = null) {
 }
 function route() {
   stopAudio();
+  earRevealed = false; earHintShown = false;
   const bits = location.hash.slice(1).split('/');
   if (bits[0] === 'lesson' && getLesson(bits[1])) {
     view = 'lesson'; currentLesson = getLesson(bits[1]);
@@ -110,7 +116,7 @@ function shell(content) {
       <nav aria-label="Main navigation">${[['today','home','Today’s practice'],['path','path','Your learning path'],['songs','music','Song collection'],['chords','keys','Chord playground'],['progress','chart','Your progress']].map(([id, ico, label]) => `<a href="#${id}" aria-label="${label}" class="nav-item ${(view === id || (view === 'lesson' && id === 'path')) ? 'selected' : ''}" ${view === id ? 'aria-current="page"' : ''}>${icon(ico)}<span>${label}</span>${id === 'path' ? `<span class="nav-count">${lessons.length}</span>` : ''}</a>`).join('')}</nav>
       <div class="sidebar-bottom"><div class="journey-mini"><span class="mini-title">Your little journey ${icon('leaf')}</span><div class="progress-track"><i style="width:${progressPercent(state)}%"></i></div><p>${completed} of ${lessons.length} lessons explored</p></div><button class="keyboard-profile" data-action="setup"><span class="profile-icon">${icon('keys')}</span><span><strong>Casio CT-X870IN</strong><small>No cables. Just you & the keys.</small></span>${icon('help')}</button></div>
     </aside>
-    <div class="workspace"><header class="topbar"><div class="breadcrumb">Your piano companion <span>/</span> <strong>${({ today: 'Today’s practice', path: 'Learning path', songs: 'Song collection', chords: 'Chord playground', progress: 'Your progress', lesson: 'Practice room' })[view]}</strong></div><div class="topbar-right"><span class="saved-status">${icon(storageWarning ? 'help' : 'save')} ${storageWarning ? 'Backup recommended' : 'Progress saved on this laptop'}</span><span class="avatar" aria-label="Your practice space">S</span></div></header><main id="main-content">${content}</main><footer class="footer"><span>A little practice. A little progress.</span><span>Made for your first notes ${icon('music')}</span></footer></div>`;
+    <div class="workspace"><header class="topbar"><div class="breadcrumb">Your keyboard companion <span>/</span> <strong>${({ today: 'Today’s practice', path: 'Learning path', songs: 'Song collection', chords: 'Chord playground', progress: 'Your progress', lesson: 'Practice room' })[view]}</strong></div><div class="topbar-right"><span class="saved-status">${icon(storageWarning ? 'help' : 'save')} ${storageWarning ? 'Backup recommended' : 'Progress saved on this laptop'}</span><span class="avatar" aria-label="Your practice space">S</span></div></header><main id="main-content">${content}</main><footer class="footer"><span>A little practice. A little progress.</span><span>Made for your first notes ${icon('music')}</span></footer></div>`;
 }
 function title(eyebrow, heading, description, extra = '') {
   return `<div class="page-heading"><div><div class="eyebrow">${eyebrow}</div><h1 id="main-heading" tabindex="-1">${heading}</h1><p>${description}</p></div>${extra}</div>`;
@@ -162,12 +168,17 @@ function keyboard() {
   for (let octave = 3; octave <= 5; octave++) for (const letter of ['C','D','E','F','G','A','B']) whites.push(`${letter}${octave}`);
   return `<div class="piano" aria-label="Preview keyboard, C3 to B5. Play exercises on your Casio.">${whites.map((note, i) => `<button class="piano-key white-key ${note === 'C4' ? 'middle-c' : ''}" data-note="${note}" data-action="note" aria-label="Preview ${note === 'C4' ? 'middle C, C4' : note}"><span>${note[0]}${note[0] === 'C' ? `<sub>${note[1]}</sub>` : ''}</span>${note === 'C4' ? '<i></i>' : ''}</button>${['C','D','F','G','A'].includes(note[0]) ? `<button class="piano-key black-key" style="left:calc(${(i + 1) / whites.length * 100}% - 1.45%)" data-note="${note[0]}#${note[1]}" data-action="note" aria-label="Preview ${note[0]} sharp ${note[1]}"><span>${note[0]}♯</span></button>` : ''}`).join('')}</div>`;
 }
-const noteName = note => note.replace('#', '♯').replace(/[0-8]$/, '');
 function lessonPage() {
-  const l = currentLesson; const s = l.steps[currentStep]; const chapter = chapters.find(c => c.id === l.chapter);
-  const done = state.completed[l.id] || []; const bpm = state.tempos[l.id] || l.bpm;
-  return `<div class="lesson-topline"><a href="#path" class="back-link">${icon('back')} Learning path</a><span>LESSON ${String(lessons.indexOf(l) + 1).padStart(2, '0')} OF ${lessons.length}<span class="dot-sep">·</span>${chapter.name}</span><span class="tag">${icon('clock')} ${l.duration} min</span></div>${title('YOUR PRACTICE ROOM', esc(l.title), esc(l.description))}<div class="lesson-layout"><aside class="checkpoint-panel"><div class="section-heading"><h2>Little checkpoints</h2><span>${done.length}/4</span></div><div class="checkpoint-progress" aria-label="${done.length} of 4 checkpoints complete">${l.steps.map((_, i) => `<i class="${done.includes(i) ? 'done' : ''}"></i>`).join('')}</div><div class="checkpoint-list">${l.steps.map((step, i) => `<button class="checkpoint ${i === currentStep ? 'selected' : ''}" data-action="step" data-step="${i}" ${i === currentStep ? 'aria-current="step"' : ''}><span>${done.includes(i) ? icon('check') : i + 1}</span><span><strong>${esc(step.title)}</strong><small>${done.includes(i) ? 'Checkpoint saved' : i === currentStep ? 'You are here' : 'Take it when you’re ready'}</small></span></button>`).join('')}</div><div class="checkpoint-save">${icon('save')} Each completed step saves automatically.</div><div class="lesson-tip">${icon('leaf')}<h3>A friendly reminder</h3><p>${esc(l.tip)}</p></div><button class="text-button flag-button ${state.review[l.id] ? 'flagged' : ''}" data-action="flag">${icon('flag')} ${state.review[l.id] ? 'Saved for more practice' : 'Save for more practice'}</button></aside><section class="practice-main">${l.chapter === 'chords' ? `<div class="chord-lesson-link"><span>Try these shapes and make your own sequence.</span><a href="#chords">Open chord playground ${icon('arrow')}</a></div>` : ''}<div class="instruction-card"><div class="step-eyebrow"><span>CHECKPOINT ${currentStep + 1} OF 4</span><span class="no-cable">${icon('keys')} Play on your Casio</span></div><h2>${esc(s.title)}</h2><p class="instruction-body">${esc(s.body)}</p><div class="practice-cue">${icon('spark')}<span>${esc(s.cue)}</span></div></div><div class="demo-card"><div class="demo-heading"><div><h3>Hear it. Find it. Try it.</h3><p>Listen to the guide, then play on your keyboard.</p></div><span class="sound-label">${icon('volume')} Sound on</span></div><div class="note-strip" aria-label="Demonstration notes with octave and beat counts">${s.pattern.map((event, i) => `<div class="note-chip" data-index="${i}"><strong>${event.notes.length ? event.notes.map(noteName).join('<span> + </span>') : '—'}</strong><small>${event.notes.length ? event.notes.map(n => esc(n.replace('#', '♯'))).join(' · ') : 'rest'}</small><span>${event.beats} ${event.beats === 1 ? 'beat' : 'beats'}</span></div>`).join('')}</div>${keyboard()}<div class="keyboard-caption"><span><i></i> Middle C = C4</span><span>Click a key to hear it · C3–B5 shown</span></div><div class="transport"><button id="play-demo" class="button primary" data-action="play">${icon('play')} Listen first</button><button id="loop-button" class="button icon-button ${looping ? 'active' : ''}" data-action="loop" aria-pressed="${looping}" aria-label="Loop demonstration" title="Loop demonstration">${icon('loop')}</button><div class="tempo-control"><label for="tempo">Practice speed <strong id="tempo-value">${bpm} BPM</strong></label><input type="range" id="tempo" min="40" max="100" step="5" value="${bpm}" aria-label="Practice speed in beats per minute"></div><button id="metronome" class="button metronome-button" data-action="metronome" aria-pressed="false">${icon('pulse')} <span>Metronome</span></button></div><div class="demo-bottom"><span>No connection needed. This guide doesn’t listen to your playing.</span><span class="beat-indicator" aria-label="Metronome beat">${[0,1,2,3].map(() => '<i class="beat-dot"></i>').join('')}</span></div></div><div class="practice-actions"><div><strong>How does that feel?</strong><p>You decide when you’re ready for the next little step.</p></div><div class="action-buttons"><button class="button quiet" data-action="easier">Make it easier</button><button class="button secondary" data-action="repeat">Practise again</button><button class="button primary" data-action="complete">${icon('check')} ${done.includes(currentStep) ? 'Continue' : 'Comfortable, continue'}</button></div></div><div class="step-navigation"><button class="text-button" data-action="previous" ${currentStep === 0 ? 'disabled' : ''}>${icon('back')} Previous step</button><span>${s.task ? esc(s.task) : 'Slow is a perfectly good speed.'}</span></div></section></div>`;
+  const l = currentLesson;
+  return renderLesson({
+    lesson: l, stepIndex: currentStep, chapter: chapters.find(c => c.id === l.chapter),
+    lessonNumber: lessons.indexOf(l) + 1, lessonCount: lessons.length,
+    done: state.completed[l.id] || [], bpm: state.tempos[l.id] || l.bpm,
+    looping, review: state.review[l.id], revealed: earRevealed, hintShown: earHintShown,
+    icon, keyboard, title,
+  });
 }
+
 function render() { app.innerHTML = shell(view === 'lesson' ? lessonPage() : view === 'path' ? learningPath() : view === 'songs' ? songsPage() : view === 'progress' ? progressPage() : view === 'chords' ? playgroundPage({ title, icon, keyboard, config: state.playground, returnToLesson: state.last }) : dashboard()); if (view === 'chords') setChordGuide(state.playground.selected); }
 function updateTransport() {
   const sequence = document.querySelector('#chord-play');
@@ -175,9 +186,18 @@ function updateTransport() {
   const hear = document.querySelector('#chord-hear');
   if (hear) { hear.innerHTML = `${icon(chordPlaybackMode === 'single' ? 'stop' : 'volume')} ${chordPlaybackMode === 'single' ? 'Stop chord' : 'Hear this chord'}`; hear.setAttribute('aria-pressed', String(chordPlaybackMode === 'single')); }
   const play = document.querySelector('#play-demo');
-  if (play) { play.innerHTML = `${icon(playing ? 'stop' : 'play')} ${playing ? 'Stop guide' : 'Listen first'}`; play.setAttribute('aria-pressed', String(playing)); }
+  if (play && currentLesson) {
+    const s = currentLesson.steps[currentStep];
+    const active = s.mode === 'rhythm' ? ticking : playing;
+    const label = active ? (s.mode === 'rhythm' ? 'Stop metronome' : 'Stop example') : stepGuidance(s).button;
+    play.innerHTML = `${icon(active ? 'stop' : s.mode === 'rhythm' ? 'pulse' : 'play')} ${esc(label)}`;
+    play.setAttribute('aria-pressed', String(active));
+  }
   const metro = document.querySelector('#metronome');
-  if (metro) { metro.classList.toggle('active', ticking); metro.setAttribute('aria-pressed', String(ticking)); }
+  if (metro) {
+    metro.classList.toggle('active', ticking); metro.setAttribute('aria-pressed', String(ticking));
+    if (currentLesson?.steps[currentStep].mode === 'rhythm') metro.innerHTML = `${icon('pulse')} <span>${ticking ? 'Stop metronome' : 'Start the metronome'}</span>`;
+  }
   const loop = document.querySelector('#loop-button');
   if (loop) { loop.classList.toggle('active', looping); loop.setAttribute('aria-pressed', String(looping)); }
 }
@@ -233,7 +253,16 @@ function completedCheckpoint() {
 document.addEventListener('click', async event => {
   const button = event.target.closest('[data-action]'); if (!button || button.disabled) return;
   const { action, id } = button.dataset;
-  if (action === 'choose-chord' && getChord(id)) {
+  if (action === 'ear-reveal' && currentLesson?.steps[currentStep].mode === 'ear') {
+    stopAudio(); earRevealed = !earRevealed; render();
+    document.querySelector('[data-action="ear-reveal"]')?.focus({ preventScroll: true });
+  } else if (action === 'ear-hint' && currentLesson?.steps[currentStep].mode === 'ear') {
+    stopAudio(); earHintShown = !earHintShown; render();
+    document.querySelector('[data-action="ear-hint"]')?.focus({ preventScroll: true });
+  } else if (action === 'ear-reference' && currentLesson?.steps[currentStep].mode === 'ear') {
+    stopAudio();
+    try { await audio.preview(currentLesson.steps[currentStep].reference); } catch (error) { toast(error.message); }
+  } else if (action === 'choose-chord' && getChord(id)) {
     stopAudio(); state.playground.selected = id; persist();
     document.querySelectorAll('.chord-choice').forEach(choice => { const selected = choice.dataset.id === id; choice.classList.toggle('selected', selected); choice.setAttribute('aria-pressed', String(selected)); });
     setChordGuide(id);
@@ -270,10 +299,21 @@ document.addEventListener('click', async event => {
     const flag = document.querySelector('.flag-button'); flag.classList.toggle('flagged', state.review[currentLesson.id]); flag.innerHTML = `${icon('flag')} ${state.review[currentLesson.id] ? 'Saved for more practice' : 'Save for more practice'}`;
   } else if (action === 'unflag') { delete state.review[id]; persist(); render(); toast('A little more comfortable. Nicely done.'); }
   else if (action === 'easier') {
+    const s = currentLesson.steps[currentStep];
+    if (s.mode === 'listen') {
+      showModal(`<span class="modal-symbol">${icon('volume')}</span><h2>Just listen for now.</h2><p>Press “Play the example” and hear it once. You do not need to touch your keyboard, name any notes, or work them out by ear.</p><p>Then choose “I’ve listened — continue”. The next checkpoint supplies the keys and finger positions.</p><button class="button primary" data-action="close">Back to listening</button>`);
+      return;
+    }
+    if (s.mode === 'ear') {
+      stopAudio(); earHintShown = true; render();
+      document.querySelector('[data-action="ear-hint"]')?.focus({ preventScroll: true });
+      return;
+    }
     state.tempos[currentLesson.id] = Math.max(40, (state.tempos[currentLesson.id] || currentLesson.bpm) - 10); persist();
     document.querySelector('#tempo').value = state.tempos[currentLesson.id]; document.querySelector('#tempo-value').textContent = `${state.tempos[currentLesson.id]} BPM`;
-    showModal(`<span class="modal-symbol">${icon('leaf')}</span><h2>Let’s make a little room.</h2><p>The demonstration is now at <strong>${state.tempos[currentLesson.id]} BPM</strong>.</p><ol class="easier-list"><li>Try just the first two notes or one chord.</li><li>Practise one hand at a time.</li><li>Pause between notes and look for the next key.</li><li>Repeat twice, then add one more note.</li></ol><p>There’s no need to match the demonstration yet.</p><button class="button primary" data-action="close">Try a smaller step ${icon('arrow')}</button>`);
-  } else if (action === 'setup') showModal(`<span class="modal-symbol">${icon('keys')}</span><div class="eyebrow">YOUR CASIO CT-X870IN</div><h2>Ready in a few little steps.</h2><ol class="easier-list"><li>Switch on the keyboard and choose a comfortable volume.</li><li>Select a piano tone using PIANO/ORGAN and check the keyboard display.</li><li>Sit comfortably with relaxed shoulders and supported feet.</li><li>Place your laptop where you can glance at it without twisting.</li><li>Use “Listen first” for a guide, then try on your real keyboard.</li></ol><div class="modal-callout">No cable or microphone is needed. You mark your own checkpoints; the app cannot check your notes or fingering.</div><p class="small">Guide notes use octave numbers: C4 is middle C. Keep your keyboard at its standard pitch without octave shift or transposition.</p><a class="text-button" href="https://www.casio.com/in/electronic-musical-instruments/support.CT-X870IN/" target="_blank" rel="noopener noreferrer">Casio manual & support ${icon('arrow')}</a>`);
+    const advice = s.mode === 'rhythm' ? '<li>Listen to four clicks without tapping.</li><li>Join in for only four taps, one per click.</li><li>Pause, then try another group of four.</li>' : '<li>Read the supplied notes. You do not need to guess them by ear.</li><li>Try just the first two notes or one chord.</li><li>Practise one hand at a time.</li><li>Pause between notes and look for the next key.</li>';
+    showModal(`<span class="modal-symbol">${icon('leaf')}</span><h2>Let’s make a little room.</h2><p>The practice speed is now <strong>${state.tempos[currentLesson.id]} BPM</strong>.</p><ol class="easier-list">${advice}</ol><p>There’s no need to keep up with the example yet.</p><button class="button primary" data-action="close">Try a smaller step ${icon('arrow')}</button>`);
+  } else if (action === 'setup') showModal(`<span class="modal-symbol">${icon('keys')}</span><div class="eyebrow">YOUR CASIO CT-X870IN</div><h2>Ready in a few little steps.</h2><ol class="easier-list"><li>Switch on the keyboard and choose a comfortable volume.</li><li>Select a piano tone using PIANO/ORGAN and check the keyboard display.</li><li>Sit comfortably with relaxed shoulders and supported feet.</li><li>Place your laptop where you can glance at it without twisting.</li><li>Follow the checkpoint label: “Listen only” means just hear the example; “Follow the shown notes” means use the supplied keys on your Casio. Only the later ear-training lesson asks you to find notes from sound.</li></ol><div class="modal-callout">No cable or microphone is needed. You mark your own checkpoints; the app cannot check your notes or fingering.</div><p class="small">Guide notes use octave numbers: C4 is middle C. Keep your keyboard at its standard pitch without octave shift or transposition.</p><a class="text-button" href="https://www.casio.com/in/electronic-musical-instruments/support.CT-X870IN/" target="_blank" rel="noopener noreferrer">Casio manual & support ${icon('arrow')}</a>`);
   else if (action === 'export') exportBackup();
   else if (action === 'import') document.querySelector('#backup-input').click();
   else if (action === 'confirm-import' && pendingBackup) {

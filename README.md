@@ -22,7 +22,9 @@ Open **http://localhost:5173** in your browser. Keep using the same browser and 
 
 ## Included
 
-- 25 lessons in 6 chapters, with 4 individually saved checkpoints per lesson (100 total).
+- 26 lessons in 7 chapters, with 4 individually saved checkpoints per lesson (104 total).
+- Clear checkpoint modes distinguish listening only, playing the supplied notes, keyboard exploration, rhythm tapping, and later ear training. Playback is beside the task; hand positions, note-reading help, and completion instructions explain what to do next.
+- A final “Work out a tiny tune by ear” lesson progresses from hearing pitch direction to finding a short song phrase. Answers and playback key highlights stay hidden until revealed; reference notes and optional hints support self-checking.
 - A chord playground for C, Am, F, and G, with note/finger guides, a custom four-bar sequence, held/pulsing/broken-chord playback, speed control, and looping. Chord choices and settings are included in progress backups.
 - Five chord lessons, including “Make a little music of your own,” with links between the lesson checkpoints and the playground.
 - Basic keyboard orientation, finger numbers, note names, rhythm, expression, melodies, chords, and both-hand coordination.
@@ -55,5 +57,6 @@ The dependency-free tests cover partial-lesson persistence, idempotent completio
 - `state.js`: progress data, validation, and persistence.
 - `audio.js`: Web Audio synthesis, looping, and metronome.
 - `app.js`: screens, interactions, and routing.
+- `lesson-guidance.js`, `lesson-view.js`, `lesson.css`: task instructions, ear-answer visibility, and the lesson interface.
 - `styles.css`: responsive interface.
 - `server.mjs`: local static server.
