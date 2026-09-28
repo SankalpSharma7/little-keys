@@ -1,5 +1,7 @@
 import { chapters, lessons, getLesson, totalCheckpoints } from './curriculum.js';
 import { loadState, saveState, validateState, countDone, isDone, completedLessons, progressPercent, firstUnfinishedStep, completeStep, nextLesson, localDay } from './state.js';
+import { scientistOverview } from './song-view.js';
+import { midi } from './audio.js';
 import { PianoAudio } from './audio.js';
 import { chords, getChord, styles as chordStyles, chordPattern } from './chords.js';
 import { playgroundPage, fingerGuide } from './playground.js';
@@ -45,6 +47,7 @@ let currentLesson = null;
 let currentStep = 0;
 let earRevealed = false;
 let earHintShown = false;
+let studySelection = { hand: 'both', from: 0, to: 0, countIn: true };
 let playing = false;
 let ticking = false;
 let looping = false;
@@ -65,7 +68,12 @@ const audio = new PianoAudio((notes, index, metronome) => {
     if (status) status.textContent = event ? `${chordPlaybackMode === 'sequence' ? `Bar ${event.bar + 1} of 4 · ` : ''}${getChord(event.chord).name} · ${chordStyles.find(s => s.id === state.playground.style).hint}` : 'Ready when you are. Listen once, then try on your Casio.';
   }
   const answerHidden = view === 'lesson' && hideEarAnswer(currentLesson?.steps[currentStep], earRevealed);
-  document.querySelectorAll('.piano-key').forEach(key => key.classList.toggle('sounding', !answerHidden && notes.includes(key.dataset.note)));
+  document.querySelectorAll('.piano-key').forEach(key => key.classList.toggle('sounding', !answerHidden && notes.some(note => midi(note) === midi(key.dataset.note))));
+  const studyStatus = document.querySelector('#study-status');
+  if (studyStatus) {
+    studyStatus.textContent = metronome && index < 0 ? `Count in: ${index + 5} of 4` : !metronome && index >= 0 && notes.length ? `Bar ${Math.floor(index / 4) + 1} · beat ${index % 4 + 1}` : ticking ? 'Metronome running' : 'Ready when you are. Start after the count-in.';
+    document.querySelectorAll('.study-bar').forEach(bar => bar.classList.toggle('active', !metronome && notes.length > 0 && Number(bar.dataset.bar) === Math.floor(index / 4)));
+  }
   document.querySelectorAll('.note-chip').forEach(chip => chip.classList.toggle('active', !metronome && Number(chip.dataset.index) === index));
   document.querySelectorAll('.beat-dot').forEach((dot, i) => dot.classList.toggle('active', metronome && i === index % 4));
   const active = document.querySelector('.note-chip.active');
@@ -102,8 +110,10 @@ function route() {
     view = 'lesson'; currentLesson = getLesson(bits[1]);
     const candidate = Number(bits[2]);
     currentStep = Number.isInteger(candidate) && candidate >= 0 && candidate < currentLesson.steps.length ? candidate : firstUnfinishedStep(state, currentLesson.id);
+    const tracks = currentLesson.steps[currentStep].tracks;
+    studySelection = { hand: tracks?.events.some(e => e.hand === 'right') ? (tracks.events.some(e => e.hand === 'left') ? 'both' : 'right') : 'left', from: 0, to: tracks ? tracks.bars.length - 1 : 0, countIn: true };
     state.last = { lessonId: currentLesson.id, step: currentStep }; persist();
-  } else { view = ['today', 'path', 'songs', 'chords', 'progress'].includes(bits[0]) ? bits[0] : 'today'; currentLesson = null; }
+  } else { view = ['today', 'path', 'songs', 'chords', 'progress', 'scientist'].includes(bits[0]) ? bits[0] : 'today'; currentLesson = null; }
   practiceTick = Date.now(); render(); window.scrollTo({ top: 0 });
   document.querySelector('#main-heading')?.focus({ preventScroll: true });
 }
@@ -113,10 +123,10 @@ function shell(content) {
     <aside class="sidebar">
       <a class="brand" href="#today" aria-label="Little Keys home"><span class="brand-mark"><i></i><i></i><i></i></span><span>little keys<span class="brand-dot">.</span></span></a>
       <div class="sidebar-label">A LITTLE EVERY DAY</div>
-      <nav aria-label="Main navigation">${[['today','home','Today’s practice'],['path','path','Your learning path'],['songs','music','Song collection'],['chords','keys','Chord playground'],['progress','chart','Your progress']].map(([id, ico, label]) => `<a href="#${id}" aria-label="${label}" class="nav-item ${(view === id || (view === 'lesson' && id === 'path')) ? 'selected' : ''}" ${view === id ? 'aria-current="page"' : ''}>${icon(ico)}<span>${label}</span>${id === 'path' ? `<span class="nav-count">${lessons.length}</span>` : ''}</a>`).join('')}</nav>
+      <nav aria-label="Main navigation">${[['today','home','Today’s practice'],['path','path','Your learning path'],['songs','music','Song collection'],['chords','keys','Chord playground'],['progress','chart','Your progress']].map(([id, ico, label]) => `<a href="#${id}" aria-label="${label}" class="nav-item ${(view === id || (view === 'lesson' && id === 'path') || (view === 'scientist' && id === 'songs')) ? 'selected' : ''}" ${view === id ? 'aria-current="page"' : ''}>${icon(ico)}<span>${label}</span>${id === 'path' ? `<span class="nav-count">${lessons.length}</span>` : ''}</a>`).join('')}</nav>
       <div class="sidebar-bottom"><div class="journey-mini"><span class="mini-title">Your little journey ${icon('leaf')}</span><div class="progress-track"><i style="width:${progressPercent(state)}%"></i></div><p>${completed} of ${lessons.length} lessons explored</p></div><button class="keyboard-profile" data-action="setup"><span class="profile-icon">${icon('keys')}</span><span><strong>Casio CT-X870IN</strong><small>No cables. Just you & the keys.</small></span>${icon('help')}</button></div>
     </aside>
-    <div class="workspace"><header class="topbar"><div class="breadcrumb">Your keyboard companion <span>/</span> <strong>${({ today: 'Today’s practice', path: 'Learning path', songs: 'Song collection', chords: 'Chord playground', progress: 'Your progress', lesson: 'Practice room' })[view]}</strong></div><div class="topbar-right"><span class="saved-status">${icon(storageWarning ? 'help' : 'save')} ${storageWarning ? 'Backup recommended' : 'Progress saved on this laptop'}</span><span class="avatar" aria-label="Your practice space">S</span></div></header><main id="main-content">${content}</main><footer class="footer"><span>A little practice. A little progress.</span><span>Made for your first notes ${icon('music')}</span></footer></div>`;
+    <div class="workspace"><header class="topbar"><div class="breadcrumb">Your keyboard companion <span>/</span> <strong>${({ today: 'Today’s practice', path: 'Learning path', songs: 'Song collection', chords: 'Chord playground', progress: 'Your progress', lesson: 'Practice room', scientist: 'The Scientist' })[view]}</strong></div><div class="topbar-right"><span class="saved-status">${icon(storageWarning ? 'help' : 'save')} ${storageWarning ? 'Backup recommended' : 'Progress saved on this laptop'}</span><span class="avatar" aria-label="Your practice space">S</span></div></header><main id="main-content">${content}</main><footer class="footer"><span>A little practice. A little progress.</span><span>Made for your first notes ${icon('music')}</span></footer></div>`;
 }
 function title(eyebrow, heading, description, extra = '') {
   return `<div class="page-heading"><div><div class="eyebrow">${eyebrow}</div><h1 id="main-heading" tabindex="-1">${heading}</h1><p>${description}</p></div>${extra}</div>`;
@@ -129,9 +139,9 @@ function lessonRow(l, index, compact = false) {
   return `<button class="lesson-row ${done ? 'done' : ''} ${current ? 'current' : ''}" data-action="lesson" data-id="${l.id}"><span class="lesson-number">${done ? icon('check') : String(index + 1).padStart(2, '0')}</span><span class="lesson-row-copy"><strong>${esc(l.title)}</strong><small>${compact ? `${l.duration} min · 4 checkpoints` : esc(l.description)}</small></span><span class="lesson-row-meta">${state.review[l.id] ? icon('flag') : ''}${done ? '<span class="done-label">Completed</span>' : current ? '<span class="current-label">Your next step</span>' : `<span>${l.duration} min</span>`}${checkpoints > 0 && !done ? `<small>${checkpoints}/4</small>` : ''}${icon('arrow')}</span></button>`;
 }
 function goalCard(type, compact = false) {
-  const adele = type === 'adele'; const goalLessons = lessons.filter(l => l.goal === type);
+  const adele = type === 'adele'; const goalLessons = lessons.filter(l => type === 'scientist' ? l.chapter === 'scientist' : l.goal === type);
   const done = goalLessons.filter(l => isDone(state, l.id)).length;
-  return `<button class="goal-card ${adele ? 'adele' : 'coldplay'} ${compact ? 'compact' : ''}" data-action="goal" data-id="${type}"><span class="goal-art">${adele ? '<span class="orbit-disc"></span>' : '<span class="sky-moon"></span><span class="sky-stars">·　 ✧<br> ✦　 ·</span>'}</span><span class="goal-copy"><small>${adele ? 'ADELE' : 'COLDPLAY'}</small><strong>${adele ? 'Someone Like You' : 'The Scientist'}</strong><span>${done === 2 ? 'Preparation complete' : 'Your something-to-look-forward-to'}</span></span>${icon('arrow')}</button>`;
+  return `<button class="goal-card ${adele ? 'adele' : 'coldplay'} ${compact ? 'compact' : ''}" data-action="goal" data-id="${type}"><span class="goal-art">${adele ? '<span class="orbit-disc"></span>' : '<span class="sky-moon"></span><span class="sky-stars">·　 ✧<br> ✦　 ·</span>'}</span><span class="goal-copy"><small>${adele ? 'ADELE' : 'COLDPLAY'}</small><strong>${adele ? 'Someone Like You' : 'The Scientist'}</strong><span>${done === goalLessons.length ? (adele ? 'Preparation complete' : 'Song path complete') : adele ? 'Your something-to-look-forward-to' : 'Opening phrases → whole simplified song'}</span></span>${icon('arrow')}</button>`;
 }
 function dashboard() {
   const resume = getLesson(state.last.lessonId); const started = countDone(state) > 0; const allDone = countDone(state) === totalCheckpoints;
@@ -150,7 +160,7 @@ function learningPath() {
 }
 function songsPage() {
   const songLessons = lessons.filter(l => l.song);
-  return `${title('SOMETHING YOU CAN HUM', 'Your song collection.', 'Start with a familiar little melody. Grow toward the songs you love.')}<div class="section-heading"><h2>Your first melodies</h2><span class="muted small">Listen, learn a phrase, make it yours.</span></div><div class="song-grid">${songLessons.map((l, i) => `<button class="song-tile song-${i}" data-action="lesson" data-id="${l.id}"><span class="song-tile-art">${icon(i === 1 ? 'leaf' : i === 2 ? 'music' : i === 3 ? 'star' : 'spark')}<span class="song-staff"></span><b>${['♪','♫','♩','✦'][i]}</b></span><span class="song-tile-body"><small>${i === 2 ? 'BEETHOVEN · SIMPLIFIED OPENING' : 'TRADITIONAL · BEGINNER MELODY'}</small><strong>${esc(l.song)}</strong><span>${isDone(state, l.id) ? '✓ Lesson completed' : `${l.duration} minutes · Right hand`}${icon('arrow')}</span></span></button>`).join('')}</div><div class="section-heading goal-heading"><h2>Your longer-term goals</h2><span class="tag">Built around your favourites</span></div><div class="goals-large">${goalCard('scientist')}${goalCard('adele')}</div><div class="song-explainer">${icon('music')}<p>The goal lessons teach original chord and coordination exercises. Full Coldplay and Adele arrangements aren’t included. After these foundations, use a beginner arrangement you own or can access to learn the actual song phrase by phrase.</p></div>`;
+  return `${title('SOMETHING YOU CAN HUM', 'Your song collection.', 'Start with a familiar little melody. Grow toward the songs you love.')}<div class="section-heading"><h2>Your first melodies</h2><span class="muted small">Listen, learn a phrase, make it yours.</span></div><div class="song-grid">${songLessons.map((l, i) => `<button class="song-tile song-${i}" data-action="lesson" data-id="${l.id}"><span class="song-tile-art">${icon(i === 1 ? 'leaf' : i === 2 ? 'music' : i === 3 ? 'star' : 'spark')}<span class="song-staff"></span><b>${['♪','♫','♩','✦'][i]}</b></span><span class="song-tile-body"><small>${i === 2 ? 'BEETHOVEN · SIMPLIFIED OPENING' : 'TRADITIONAL · BEGINNER MELODY'}</small><strong>${esc(l.song)}</strong><span>${isDone(state, l.id) ? '✓ Lesson completed' : `${l.duration} minutes · Right hand`}${icon('arrow')}</span></span></button>`).join('')}</div><div class="section-heading goal-heading"><h2>Your longer-term goals</h2><span class="tag">Built around your favourites</span></div><div class="goals-large">${goalCard('scientist')}${goalCard('adele')}</div><div class="song-explainer">${icon('music')}<p>The Scientist now has a dedicated song path: preparation, opening melody, both hands, chorus and a whole-song performance using Pianote’s linked reference. Adele currently has preparation exercises only.</p></div>`;
 }
 function progressPage() {
   const reviews = lessons.filter(l => state.review[l.id]);
@@ -159,14 +169,17 @@ function progressPage() {
     ['A tune to call your own', 'Finish your first melody lesson', isDone(state, 'first-tune'), 'music'],
     ['A little Beethoven', 'Complete the Ode to Joy opening', isDone(state, 'ode'), 'star'],
     ['Both hands together', 'Finish your first two-hand lesson', isDone(state, 'together'), 'hands'],
-    ['Foundations in place', `Explore all ${lessons.length} lessons`, completedLessons(state) === lessons.length, 'leaf'],
+    ['Foundations in place', 'Explore the original 26 foundation lessons', lessons.filter(l => l.chapter !== 'scientist').every(l => isDone(state, l.id)), 'leaf'],
+    ['Your first Coldplay melody', 'Play the opening song section', isDone(state, 'scientist-phrases'), 'music'],
+    ['Coldplay with both hands', 'Add bass to your opening phrases', isDone(state, 'scientist-support'), 'hands'],
+    ['A whole simplified song', 'Complete The Scientist performance checkpoints', isDone(state, 'scientist-performance'), 'star'],
   ];
-  return `${title('LOOK AT YOUR LITTLE WINS', 'This is what progress looks like.', 'Every comfortable note counts. There’s no deadline here.')}<section class="progress-overview"><div class="progress-ring" style="--progress:${progressPercent(state)}%"><span><strong>${progressPercent(state)}<small>%</small></strong><span>of your foundations</span></span></div><div><h2>${completedLessons(state) === lessons.length ? 'A beautiful beginning.' : countDone(state) ? 'You’re making music happen.' : 'Your first little win is waiting.'}</h2><p>${countDone(state)} of ${totalCheckpoints} checkpoints · ${completedLessons(state)} of ${lessons.length} lessons complete</p><p class="muted">${state.days.length} practice days · ${Math.floor(state.practiceSeconds / 60)} minutes in the practice room</p><button class="button primary" data-action="resume">Back to the keys ${icon('arrow')}</button><small class="time-note">Time counts while the practice page is visible, not verified playing time.</small></div></section><div class="section-heading"><h2>Milestones, not deadlines</h2></div><div class="milestone-grid">${milestones.map(([name, desc, earned, ico]) => `<div class="milestone ${earned ? 'earned' : ''}"><span>${icon(ico)}</span><strong>${name}</strong><p>${desc}</p><small>${earned ? '✓ Reached' : 'Something to look forward to'}</small></div>`).join('')}</div><div class="dashboard-columns progress-bottom"><section><div class="section-heading"><h2>A little more practice</h2><span class="tag">${reviews.length} saved</span></div>${reviews.length ? `<div class="review-list">${reviews.map(l => `<div>${lessonRow(l, lessons.indexOf(l), true)}<button class="text-button" data-action="unflag" data-id="${l.id}" aria-label="Remove ${esc(l.title)} from practice list">${icon('check')} Feeling comfortable now</button></div>`).join('')}</div>` : `<div class="empty-state">${icon('flag')}<h3>Your practice-again list</h3><p>Mark any lesson “Practise again” and we’ll keep it here for you.</p></div>`}</section><section class="backup-card"><span class="chapter-icon purple">${icon('save')}</span><h2>A safe place for your progress</h2><p>Your checkpoints and practice speeds are saved in this browser on this laptop. Export a backup before clearing browser data, changing browsers, or moving computers.</p><div class="backup-actions"><button class="button secondary" data-action="export">${icon('download')} Export backup</button><button class="button quiet" data-action="import">${icon('upload')} Import backup</button></div><small>${state.updatedAt ? `Last saved: ${new Date(state.updatedAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}` : 'Your progress saves as you go.'}</small></section></div>`;
+  return `${title('LOOK AT YOUR LITTLE WINS', 'This is what progress looks like.', 'Every comfortable note counts. There’s no deadline here.')}<section class="progress-overview"><div class="progress-ring" style="--progress:${progressPercent(state)}%"><span><strong>${progressPercent(state)}<small>%</small></strong><span>of your learning path</span></span></div><div><h2>${completedLessons(state) === lessons.length ? 'A beautiful beginning.' : countDone(state) ? 'You’re making music happen.' : 'Your first little win is waiting.'}</h2><p>${countDone(state)} of ${totalCheckpoints} checkpoints · ${completedLessons(state)} of ${lessons.length} lessons complete</p><p class="muted">${state.days.length} practice days · ${Math.floor(state.practiceSeconds / 60)} minutes in the practice room</p><button class="button primary" data-action="resume">Back to the keys ${icon('arrow')}</button><small class="time-note">Time counts while the practice page is visible, not verified playing time.</small></div></section><div class="section-heading"><h2>Milestones, not deadlines</h2></div><div class="milestone-grid">${milestones.map(([name, desc, earned, ico]) => `<div class="milestone ${earned ? 'earned' : ''}"><span>${icon(ico)}</span><strong>${name}</strong><p>${desc}</p><small>${earned ? '✓ Reached' : 'Something to look forward to'}</small></div>`).join('')}</div><div class="dashboard-columns progress-bottom"><section><div class="section-heading"><h2>A little more practice</h2><span class="tag">${reviews.length} saved</span></div>${reviews.length ? `<div class="review-list">${reviews.map(l => `<div>${lessonRow(l, lessons.indexOf(l), true)}<button class="text-button" data-action="unflag" data-id="${l.id}" aria-label="Remove ${esc(l.title)} from practice list">${icon('check')} Feeling comfortable now</button></div>`).join('')}</div>` : `<div class="empty-state">${icon('flag')}<h3>Your practice-again list</h3><p>Mark any lesson “Practise again” and we’ll keep it here for you.</p></div>`}</section><section class="backup-card"><span class="chapter-icon purple">${icon('save')}</span><h2>A safe place for your progress</h2><p>Your checkpoints and practice speeds are saved in this browser on this laptop. Export a backup before clearing browser data, changing browsers, or moving computers.</p><div class="backup-actions"><button class="button secondary" data-action="export">${icon('download')} Export backup</button><button class="button quiet" data-action="import">${icon('upload')} Import backup</button></div><small>${state.updatedAt ? `Last saved: ${new Date(state.updatedAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}` : 'Your progress saves as you go.'}</small></section></div>`;
 }
 function keyboard() {
   const whites = [];
   for (let octave = 3; octave <= 5; octave++) for (const letter of ['C','D','E','F','G','A','B']) whites.push(`${letter}${octave}`);
-  return `<div class="piano" aria-label="Preview keyboard, C3 to B5. Play exercises on your Casio.">${whites.map((note, i) => `<button class="piano-key white-key ${note === 'C4' ? 'middle-c' : ''}" data-note="${note}" data-action="note" aria-label="Preview ${note === 'C4' ? 'middle C, C4' : note}"><span>${note[0]}${note[0] === 'C' ? `<sub>${note[1]}</sub>` : ''}</span>${note === 'C4' ? '<i></i>' : ''}</button>${['C','D','F','G','A'].includes(note[0]) ? `<button class="piano-key black-key" style="left:calc(${(i + 1) / whites.length * 100}% - 1.45%)" data-note="${note[0]}#${note[1]}" data-action="note" aria-label="Preview ${note[0]} sharp ${note[1]}"><span>${note[0]}♯</span></button>` : ''}`).join('')}</div>`;
+  return `<div class="piano" aria-label="Preview keyboard, C3 to B5. Play exercises on your Casio.">${whites.map((note, i) => `<button class="piano-key white-key ${note === 'C4' ? 'middle-c' : ''}" data-note="${note}" data-action="note" aria-label="Preview ${note === 'C4' ? 'middle C, C4' : note}"><span>${note[0]}${note[0] === 'C' ? `<sub>${note[1]}</sub>` : ''}</span>${note === 'C4' ? '<i></i>' : ''}</button>${['C','D','F','G','A'].includes(note[0]) ? `<button class="piano-key black-key" style="left:calc(${(i + 1) / whites.length * 100}% - 1.45%)" data-note="${note[0]}#${note[1]}" data-action="note" aria-label="Preview ${note[0]} sharp ${note[1]}${note[0] === 'A' ? ', B flat ' + note[1] : ''}"><span>${note[0] === 'A' ? 'B♭' : note[0] + '♯'}</span></button>` : ''}`).join('')}</div>`;
 }
 function lessonPage() {
   const l = currentLesson;
@@ -175,11 +188,11 @@ function lessonPage() {
     lessonNumber: lessons.indexOf(l) + 1, lessonCount: lessons.length,
     done: state.completed[l.id] || [], bpm: state.tempos[l.id] || l.bpm,
     looping, review: state.review[l.id], revealed: earRevealed, hintShown: earHintShown,
-    icon, keyboard, title,
+    icon, keyboard, title, selection: studySelection,
   });
 }
 
-function render() { app.innerHTML = shell(view === 'lesson' ? lessonPage() : view === 'path' ? learningPath() : view === 'songs' ? songsPage() : view === 'progress' ? progressPage() : view === 'chords' ? playgroundPage({ title, icon, keyboard, config: state.playground, returnToLesson: state.last }) : dashboard()); if (view === 'chords') setChordGuide(state.playground.selected); }
+function render() { app.innerHTML = shell(view === 'scientist' ? scientistOverview({state, isDone, lessonRow, lessons, icon, title}) : view === 'lesson' ? lessonPage() : view === 'path' ? learningPath() : view === 'songs' ? songsPage() : view === 'progress' ? progressPage() : view === 'chords' ? playgroundPage({ title, icon, keyboard, config: state.playground, returnToLesson: state.last }) : dashboard()); if (view === 'chords') setChordGuide(state.playground.selected); }
 function updateTransport() {
   const sequence = document.querySelector('#chord-play');
   if (sequence) { sequence.innerHTML = `${icon(chordPlaybackMode === 'sequence' ? 'stop' : 'play')} ${chordPlaybackMode === 'sequence' ? 'Stop sequence' : 'Play my sequence'}`; sequence.setAttribute('aria-pressed', String(chordPlaybackMode === 'sequence')); }
@@ -210,7 +223,7 @@ function setChordGuide(id) {
   name.textContent = chord.name;
   document.querySelector('#chord-description').textContent = chord.description;
   document.querySelector('#finger-guide').innerHTML = fingerGuide(chord);
-  document.querySelectorAll('.piano-key').forEach(key => key.classList.toggle('chord-target', chord.notes.includes(key.dataset.note)));
+  document.querySelectorAll('.piano-key').forEach(key => key.classList.toggle('chord-target', chord.notes.some(note => midi(note) === midi(key.dataset.note))));
 }
 async function playChords(mode) {
   if (chordPlaybackMode === mode) { stopAudio(); return; }
@@ -226,7 +239,11 @@ async function playDemo() {
   if (!currentLesson) return;
   stopAudio(); playing = true; updateTransport();
   const s = currentLesson.steps[currentStep];
-  try { await audio.play(s.pattern, state.tempos[currentLesson.id] || currentLesson.bpm, { loop: looping, bass: s.bass }); }
+  try {
+    if (s.mode === 'reference') { stopAudio(); return; }
+    if (s.tracks) await audio.playStudy(s.tracks, state.tempos[currentLesson.id] || currentLesson.bpm, { loop: looping, ...studySelection });
+    else await audio.play(s.pattern, state.tempos[currentLesson.id] || currentLesson.bpm, { loop: looping, bass: s.bass });
+  }
   catch (error) { stopAudio(); toast(error.message); }
 }
 function showModal(content) { stopAudio(); document.querySelector('#modal-content').innerHTML = `<button class="modal-close" data-action="close" aria-label="Close dialog">${icon('close')}</button>${content}`; const heading = modal.querySelector("h2"); if (heading) { heading.id = "modal-title"; modal.setAttribute("aria-labelledby", "modal-title"); } if (!modal.open) modal.showModal(); }
@@ -235,6 +252,7 @@ function showRecap() {
   showModal(`<span class="modal-symbol">${icon('leaf')}</span><div class="eyebrow">A SOFT LANDING</div><h2>A quick little recap.</h2><p>You’re in <strong>${esc(l.title)}</strong>, at checkpoint ${stepIndex + 1} of 4.</p><div class="modal-callout">${esc(l.tip)}</div>${stepIndex > 0 ? `<p>Earlier in this lesson:</p><ul class="recap-list">${l.steps.slice(0, stepIndex).map(s => `<li><strong>${esc(s.title)}</strong><span>${esc(s.cue)}</span></li>`).join('')}</ul>` : '<p>Take a moment to find middle C and relax your hands before starting.</p>'}<button class="button primary" data-action="resume">Back to the keys ${icon('arrow')}</button>`);
 }
 function showGoal(id) {
+  if (id === 'scientist') { navigate('scientist'); return; }
   const items = lessons.filter(l => l.goal === id);
   showModal(`<span class="modal-symbol">${icon('music')}</span><div class="eyebrow">YOUR SONG GOAL</div><h2>${id === 'adele' ? 'Someone Like You' : 'The Scientist'}</h2><p>${id === 'adele' ? 'We’ll build even broken chords, a relaxed hand position, and a simple held bass.' : 'We’ll build a steady pulse, comfortable chord changes, and bass-plus-chord coordination.'}</p><div class="modal-callout">Start with the foundations if chords are new. These are original preparation drills; the full song arrangement isn’t included.</div><div class="goal-lessons">${items.map(l => `<button class="goal-lesson" data-action="lesson" data-id="${l.id}"><span><small>LESSON ${lessons.indexOf(l) + 1}</small><strong>${esc(l.title)}</strong></span>${icon(isDone(state, l.id) ? 'check' : 'arrow')}</button>`).join('')}</div><button class="text-button" data-action="path">Explore the foundations first ${icon('arrow')}</button>`);
 }
@@ -255,6 +273,7 @@ function completedCheckpoint() {
 document.addEventListener('click', async event => {
   const button = event.target.closest('[data-action]'); if (!button || button.disabled) return;
   const { action, id } = button.dataset;
+  if (action === 'source') { stopAudio(); return; }
   if (action === 'ear-reveal' && currentLesson?.steps[currentStep].mode === 'ear') {
     stopAudio(); earRevealed = !earRevealed; render();
     document.querySelector('[data-action="ear-reveal"]')?.focus({ preventScroll: true });
@@ -302,6 +321,10 @@ document.addEventListener('click', async event => {
   } else if (action === 'unflag') { delete state.review[id]; persist(); render(); toast('A little more comfortable. Nicely done.'); }
   else if (action === 'easier') {
     const s = currentLesson.steps[currentStep];
+    if (s.mode === 'reference') {
+      showModal(`<h2>Make the song phrase smaller.</h2><p>Keep the score open at the location shown. Take just two or three notes with your right hand. Find the keys without a beat first, then tap their rhythm, then play. Leave out the bass until the melody is comfortable.</p><p>Use the note map under the source links. Return to “A small map for the melody” if notation is new.</p><button class="button primary" data-action="close">Back to my phrase</button>`);
+      return;
+    }
     if (s.mode === 'listen') {
       showModal(`<span class="modal-symbol">${icon('volume')}</span><h2>Just listen for now.</h2><p>Press “Play the example” and hear it once. You do not need to touch your keyboard, name any notes, or work them out by ear.</p><p>Then choose “I’ve listened — continue”. The next checkpoint supplies the keys and finger positions.</p><button class="button primary" data-action="close">Back to listening</button>`);
       return;
@@ -331,6 +354,15 @@ document.addEventListener('input', event => {
   stopAudio(); state.tempos[currentLesson.id] = Number(event.target.value); document.querySelector('#tempo-value').textContent = `${event.target.value} BPM`; persist();
 });
 document.addEventListener('change', event => {
+  if (event.target.id.startsWith('study-') && currentLesson?.steps[currentStep].tracks) {
+    stopAudio();
+    if (event.target.id === 'study-hand') studySelection.hand = event.target.value;
+    if (event.target.id === 'study-from') { studySelection.from = Number(event.target.value); studySelection.to = Math.max(studySelection.to, studySelection.from); }
+    if (event.target.id === 'study-to') { studySelection.to = Number(event.target.value); studySelection.from = Math.min(studySelection.from, studySelection.to); }
+    if (event.target.id === 'study-count-in') studySelection.countIn = event.target.checked;
+    const focusId = event.target.id; render(); document.getElementById(focusId)?.focus({preventScroll: true});
+    return;
+  }
   if (!event.target.matches('[data-chord-bar]') || !getChord(event.target.value)) return;
   stopAudio(); state.playground.sequence[Number(event.target.dataset.chordBar)] = event.target.value; persist();
 });

@@ -1,7 +1,9 @@
+import { buildSongTimeline } from './song-audio.js';
+
 export function midi(note) {
-  const match = /^([A-G])(#?)([0-8])$/.exec(note);
+  const match = /^([A-G])([#b]?)([0-8])$/.exec(note);
   if (!match) throw new Error(`Invalid note: ${note}`);
-  return (Number(match[3]) + 1) * 12 + ({ C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[match[1]]) + (match[2] ? 1 : 0);
+  return (Number(match[3]) + 1) * 12 + ({ C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[match[1]]) + (match[2] === '#' ? 1 : match[2] === 'b' ? -1 : 0);
 }
 export const frequency = note => 440 * 2 ** ((midi(note) - 69) / 12);
 export function buildEvents(pattern, bpm, bass) {
@@ -63,6 +65,33 @@ export class PianoAudio {
         }, (when - this.ctx.currentTime) * 1000);
       }
       const end = start + data.duration;
+      if (loop) this.timer(() => cycle(end), (end - this.ctx.currentTime - 0.12) * 1000);
+      else this.timer(() => { if (token === this.token) { this.onNote([], -1, false); this.onEnd(); } }, (end - this.ctx.currentTime) * 1000);
+    };
+    cycle(this.ctx.currentTime + 0.05);
+  }
+  async playStudy(study, bpm, { loop = false, countIn = true, ...selection } = {}) {
+    this.stop();
+    const token = this.token;
+    const timeline = buildSongTimeline(study, selection);
+    if (!timeline.events.length) throw new Error('This exercise has no notes for that hand. Choose another hand.');
+    await this.init();
+    if (token !== this.token) return;
+    const beatSeconds = 60 / bpm;
+    const cycle = start => {
+      if (token !== this.token) return;
+      const lead = countIn ? 4 : 0;
+      for (let i = 0; i < lead; i++) {
+        const when = start + i * beatSeconds;
+        this.click(when, i === 0);
+        this.timer(() => { if (token === this.token) this.onNote([], i - 4, true); }, (when - this.ctx.currentTime) * 1000);
+      }
+      const musicStart = start + lead * beatSeconds;
+      for (const event of timeline.events) this.tone(event.note, musicStart + event.beat * beatSeconds, event.duration * beatSeconds * 0.95, event.hand === 'left' ? 0.65 : 0.8);
+      for (const point of timeline.points) this.timer(() => {
+        if (token === this.token) this.onNote(point.notes, point.index, false);
+      }, (musicStart + point.beat * beatSeconds - this.ctx.currentTime) * 1000);
+      const end = musicStart + timeline.beats * beatSeconds;
       if (loop) this.timer(() => cycle(end), (end - this.ctx.currentTime - 0.12) * 1000);
       else this.timer(() => { if (token === this.token) { this.onNote([], -1, false); this.onEnd(); } }, (end - this.ctx.currentTime) * 1000);
     };

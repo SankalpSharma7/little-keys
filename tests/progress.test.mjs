@@ -84,7 +84,8 @@ test('all curriculum audio notes fit the displayed keyboard, with valid timing a
     assert.equal(l.steps.length, 4);
     for (const s of l.steps) {
       assert.ok(s.body.length > 50);
-      assert.ok(s.pattern.length > 0);
+      assert.ok(s.mode === 'reference' || s.tracks || s.pattern.length > 0);
+      if (s.tracks) for (const e of s.tracks.events) { assert.ok(midi(e.note) >= 48 && midi(e.note) <= 83); assert.ok(e.duration > 0 && e.beat >= 0); }
       for (const e of s.pattern) {
         assert.ok(e.beats > 0 && Number.isFinite(e.beats));
         for (const n of e.notes) assert.ok(midi(n) >= 48 && midi(n) <= 83, n);

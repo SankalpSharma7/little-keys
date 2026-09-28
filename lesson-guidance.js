@@ -1,4 +1,11 @@
 const modes = {
+  reference: {
+    label: 'Practise with the song reference',
+    instruction: 'Use the linked score for the actual song melody. Follow the location and task below, then practise on your Casio. The song melody is in the reference, not in an in-app note demo.',
+    button: 'Open the song score', completion: 'I met this checkpoint — continue',
+    doneWhen: 'Use the specific checkpoint goal below. You decide when you have met it; opening the reference alone does not complete a playing task.',
+    next: 'Open the reference → find the marked section → practise → save your checkpoint',
+  },
   guided: {
     label: 'Follow the shown notes',
     instruction: 'The keys are provided. Hear the example if helpful, then read the note names and play slowly on your Casio. You do not need to work out notes by ear.',

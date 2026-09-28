@@ -1,0 +1,5071 @@
+[
+  {
+    "id": "welcome",
+    "steps": [
+      {
+        "title": "Make yourself at home",
+        "mode": "explore",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Spot the black-key pattern",
+        "mode": "explore",
+        "pattern": [
+          {
+            "notes": [
+              "C#4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D#4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F#4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G#4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A#4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Find your first C",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "A tiny musical hello",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cde",
+    "steps": [
+      {
+        "title": "Find C again",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Give each finger a note",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Change the order",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Try it with fewer hints",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "five-notes",
+    "steps": [
+      {
+        "title": "Meet F and G",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Settle your five fingers",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Come back home",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "A little skipping game",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "first-tune",
+    "steps": [
+      {
+        "title": "Listen to the tune",
+        "mode": "listen",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Learn the first phrase",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Learn the second phrase",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Put your tune together",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "steady-beat",
+    "steps": [
+      {
+        "title": "Tap the pulse",
+        "mode": "rhythm",
+        "pattern": [
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "One note on each beat",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Keep the beat while moving",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Make your own steady ending",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "long-short",
+    "steps": [
+      {
+        "title": "Hold for two beats",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Mix one and two",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Hold for four",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Use the rhythm in a phrase",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rests",
+    "steps": [
+      {
+        "title": "Leave room for silence",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "A question and an answer",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Meet three rhythm symbols",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Keep counting through a rest",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "expression",
+    "steps": [
+      {
+        "title": "Soft and a little louder",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Separate the notes",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Connect the notes",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Shape a musical sentence",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mary",
+    "steps": [
+      {
+        "title": "Listen to the opening",
+        "mode": "listen",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "The first line",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "The middle and ending",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Play the complete melody",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ode",
+    "steps": [
+      {
+        "title": "Hear the opening",
+        "mode": "listen",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Practise the first half",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Practise the answer",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1.5
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 0.5
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Play the opening theme",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1.5
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 0.5
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "twinkle",
+    "steps": [
+      {
+        "title": "Hear the opening first",
+        "mode": "listen",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Play the opening and answer",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "The middle section",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Put all three sections together",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "note-map",
+    "steps": [
+      {
+        "title": "Complete the alphabet",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "B4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C5"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Find the same name elsewhere",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C5"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Meet a black-key name",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C#4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Move a familiar phrase up",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "E5"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D5"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C5"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c-chord",
+    "steps": [
+      {
+        "title": "Find the three notes",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Play them together",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Give your chord a pulse",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Recognise the sound",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "am-f",
+    "steps": [
+      {
+        "title": "Build A minor",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Build F major",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "F3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Move slowly between them",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Try a three-chord journey",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "g-changes",
+    "steps": [
+      {
+        "title": "Meet G major",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "G3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "B3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G3",
+              "B3",
+              "D4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Move from C to G",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G3",
+              "B3",
+              "D4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Four chords, slowly",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "G3",
+              "B3",
+              "D4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Repeat with a steady pulse",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "G3",
+              "B3",
+              "D4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "broken-chords",
+    "steps": [
+      {
+        "title": "Open up a C chord",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Try A minor",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Try F and G",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "F3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "B3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "B3"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Make a flowing little loop",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "B3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "B3"
+            ],
+            "beats": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "chord-play",
+    "steps": [
+      {
+        "title": "Choose your chord colours",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Build a four-chord story",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "G3",
+              "B3",
+              "D4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "One sequence, two different feels",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "B3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "B3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Your mini performance",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "G3",
+              "B3",
+              "D4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "left-hand",
+    "steps": [
+      {
+        "title": "Find a lower C",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Five notes in the left hand",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Practise bass-note moves",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "G3"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Keep a slow left-hand pulse",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "G3"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "G3"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "together",
+    "steps": [
+      {
+        "title": "Prepare each hand",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C3"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Land together",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C3",
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Hold left, move right",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Repeat your first two-hand phrase",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bass-chords",
+    "steps": [
+      {
+        "title": "Build a full C sound",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C3",
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Add A minor",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "A3",
+              "A4",
+              "C5",
+              "E5"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "A3",
+              "A4",
+              "C5",
+              "E5"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Explore F and G",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "F3",
+              "F4",
+              "A4",
+              "C5"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G3",
+              "G4",
+              "B4",
+              "D5"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Your first accompaniment",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3",
+              "A4",
+              "C5",
+              "E5"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3",
+              "F4",
+              "A4",
+              "C5"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "G3",
+              "G4",
+              "B4",
+              "D5"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hands-flow",
+    "steps": [
+      {
+        "title": "Practise the right-hand pattern",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Add one held bass note",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Try the same idea on F",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "F3",
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C5"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Switch after a breathing space",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F3",
+              "F4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C5"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A4"
+            ],
+            "beats": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "scientist-prep",
+    "steps": [
+      {
+        "title": "Listen for the job of the keyboard",
+        "mode": "listen",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Repeat a chord without rushing",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Change the shape on time",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G3",
+              "B3",
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G3",
+              "B3",
+              "D4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Make it sound like a phrase",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "A3",
+              "C4",
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F3",
+              "A3",
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G3",
+              "B3",
+              "D4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "G3",
+              "B3",
+              "D4"
+            ],
+            "beats": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "scientist-both",
+    "steps": [
+      {
+        "title": "Revisit bass plus chord",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3",
+              "F4",
+              "A4",
+              "C5"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Repeat the right-hand chord",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "C3",
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F3",
+              "F4",
+              "A4",
+              "C5"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "F3",
+              "F4",
+              "A4",
+              "C5"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Build a four-chord accompaniment",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3",
+              "A4",
+              "C5",
+              "E5"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3",
+              "F4",
+              "A4",
+              "C5"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "G3",
+              "G4",
+              "B4",
+              "D5"
+            ],
+            "beats": 4
+          }
+        ]
+      },
+      {
+        "title": "Choose your next song step",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "A3",
+              "A4",
+              "C5",
+              "E5"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "F3",
+              "F4",
+              "A4",
+              "C5"
+            ],
+            "beats": 4
+          },
+          {
+            "notes": [
+              "G3",
+              "G4",
+              "B4",
+              "D5"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "adele-prep",
+    "steps": [
+      {
+        "title": "Hear a repeating shape",
+        "mode": "listen",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Keep four notes even",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Move the repeating pattern",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Find a comfortable flow",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "F3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "A3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "B3"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "B3"
+            ],
+            "beats": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "adele-both",
+    "steps": [
+      {
+        "title": "Start with one chord and two hands",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Try an A-minor shape",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "A3",
+              "A4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C5"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E5"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C5"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Make your own short performance",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C3",
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          }
+        ]
+      },
+      {
+        "title": "Your next chapter",
+        "mode": "guided",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "G4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4",
+              "E4",
+              "G4"
+            ],
+            "beats": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "playing-by-ear",
+    "steps": [
+      {
+        "title": "Hear which way the sound moves",
+        "mode": "ear",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Find one note from three choices",
+        "mode": "ear",
+        "pattern": [
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 3
+          }
+        ]
+      },
+      {
+        "title": "Find a three-note phrase",
+        "mode": "ear",
+        "pattern": [
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 2
+          }
+        ]
+      },
+      {
+        "title": "Work out the opening of a tune",
+        "mode": "ear",
+        "pattern": [
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "C4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "D4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 1
+          },
+          {
+            "notes": [
+              "E4"
+            ],
+            "beats": 2
+          }
+        ]
+      }
+    ]
+  }
+]
