@@ -185,13 +185,15 @@ function updateTransport() {
   if (sequence) { sequence.innerHTML = `${icon(chordPlaybackMode === 'sequence' ? 'stop' : 'play')} ${chordPlaybackMode === 'sequence' ? 'Stop sequence' : 'Play my sequence'}`; sequence.setAttribute('aria-pressed', String(chordPlaybackMode === 'sequence')); }
   const hear = document.querySelector('#chord-hear');
   if (hear) { hear.innerHTML = `${icon(chordPlaybackMode === 'single' ? 'stop' : 'volume')} ${chordPlaybackMode === 'single' ? 'Stop chord' : 'Hear this chord'}`; hear.setAttribute('aria-pressed', String(chordPlaybackMode === 'single')); }
-  const play = document.querySelector('#play-demo');
-  if (play && currentLesson) {
+  const playButtons = document.querySelectorAll('#play-demo, #play-notes');
+  if (playButtons.length && currentLesson) {
     const s = currentLesson.steps[currentStep];
     const active = s.mode === 'rhythm' ? ticking : playing;
     const label = active ? (s.mode === 'rhythm' ? 'Stop metronome' : 'Stop example') : stepGuidance(s).button;
-    play.innerHTML = `${icon(active ? 'stop' : s.mode === 'rhythm' ? 'pulse' : 'play')} ${esc(label)}`;
-    play.setAttribute('aria-pressed', String(active));
+    playButtons.forEach(play => {
+      play.innerHTML = `${icon(active ? 'stop' : s.mode === 'rhythm' ? 'pulse' : 'play')} ${esc(label)}`;
+      play.setAttribute('aria-pressed', String(active));
+    });
   }
   const metro = document.querySelector('#metronome');
   if (metro) {
