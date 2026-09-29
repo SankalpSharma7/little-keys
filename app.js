@@ -1,5 +1,6 @@
 import { chapters, lessons, getLesson, totalCheckpoints } from './curriculum.js';
 import { loadState, saveState, validateState, countDone, isDone, completedLessons, progressPercent, firstUnfinishedStep, completeStep, nextLesson, localDay } from './state.js';
+import { practiceStudy, studyDuration } from './song-audio.js';
 import { scientistOverview } from './song-view.js';
 import { midi } from './audio.js';
 import { PianoAudio } from './audio.js';
@@ -47,7 +48,7 @@ let currentLesson = null;
 let currentStep = 0;
 let earRevealed = false;
 let earHintShown = false;
-let studySelection = { hand: 'both', from: 0, to: 0, countIn: true };
+let studySelection = { hand: 'both', from: 0, to: 0, countIn: true, bassStyle: 'held' };
 let playing = false;
 let ticking = false;
 let looping = false;
@@ -112,7 +113,7 @@ function route() {
     currentStep = Number.isInteger(candidate) && candidate >= 0 && candidate < currentLesson.steps.length ? candidate : firstUnfinishedStep(state, currentLesson.id);
     const tracks = currentLesson.steps[currentStep].tracks;
     if (tracks?.sections) looping = false;
-    studySelection = { hand: tracks?.events.some(e => e.hand === 'right') ? (tracks.events.some(e => e.hand === 'left') ? 'both' : 'right') : 'left', from: 0, to: tracks ? tracks.bars.length - 1 : 0, countIn: true };
+    studySelection = { hand: tracks?.events.some(e => e.hand === 'right') ? (tracks.events.some(e => e.hand === 'left') ? 'both' : 'right') : 'left', from: 0, to: tracks ? tracks.bars.length - 1 : 0, countIn: true, bassStyle: 'held' };
     state.last = { lessonId: currentLesson.id, step: currentStep }; persist();
   } else { view = ['today', 'path', 'songs', 'chords', 'progress', 'scientist'].includes(bits[0]) ? bits[0] : 'today'; currentLesson = null; }
   practiceTick = Date.now(); render(); window.scrollTo({ top: 0 });
@@ -161,7 +162,7 @@ function learningPath() {
 }
 function songsPage() {
   const songLessons = lessons.filter(l => l.song);
-  return `${title('SOMETHING YOU CAN HUM', 'Your song collection.', 'Start with a familiar little melody. Grow toward the songs you love.')}<div class="section-heading"><h2>Your first melodies</h2><span class="muted small">Listen, learn a phrase, make it yours.</span></div><div class="song-grid">${songLessons.map((l, i) => `<button class="song-tile song-${i}" data-action="lesson" data-id="${l.id}"><span class="song-tile-art">${icon(i === 1 ? 'leaf' : i === 2 ? 'music' : i === 3 ? 'star' : 'spark')}<span class="song-staff"></span><b>${['♪','♫','♩','✦'][i]}</b></span><span class="song-tile-body"><small>${i === 2 ? 'BEETHOVEN · SIMPLIFIED OPENING' : 'TRADITIONAL · BEGINNER MELODY'}</small><strong>${esc(l.song)}</strong><span>${isDone(state, l.id) ? '✓ Lesson completed' : `${l.duration} minutes · Right hand`}${icon('arrow')}</span></span></button>`).join('')}</div><div class="section-heading goal-heading"><h2>Your longer-term goals</h2><span class="tag">Built around your favourites</span></div><div class="goals-large">${goalCard('scientist')}${goalCard('adele')}</div><div class="song-explainer">${icon('music')}<p>The Scientist has ten in-app accompaniment lessons: chords, verse, chorus, transitions and a complete beginner performance for singing or humming. The vocal melody is not included in playback. Earlier score-based melody lessons remain optional. Adele currently has preparation exercises only.</p></div>`;
+  return `${title('SOMETHING YOU CAN HUM', 'Your song collection.', 'Start with a familiar little melody. Grow toward the songs you love.')}<div class="section-heading"><h2>Your first melodies</h2><span class="muted small">Listen, learn a phrase, make it yours.</span></div><div class="song-grid">${songLessons.map((l, i) => `<button class="song-tile song-${i}" data-action="lesson" data-id="${l.id}"><span class="song-tile-art">${icon(i === 1 ? 'leaf' : i === 2 ? 'music' : i === 3 ? 'star' : 'spark')}<span class="song-staff"></span><b>${['♪','♫','♩','✦'][i]}</b></span><span class="song-tile-body"><small>${i === 2 ? 'BEETHOVEN · SIMPLIFIED OPENING' : 'TRADITIONAL · BEGINNER MELODY'}</small><strong>${esc(l.song)}</strong><span>${isDone(state, l.id) ? '✓ Lesson completed' : `${l.duration} minutes · Right hand`}${icon('arrow')}</span></span></button>`).join('')}</div><div class="section-heading goal-heading"><h2>Your longer-term goals</h2><span class="tag">Built around your favourites</span></div><div class="goals-large">${goalCard('scientist')}${goalCard('adele')}</div><div class="song-explainer">${icon('music')}<p>The Scientist has eleven in-app accompaniment lessons: chords, the intro into the first minute, verse, chorus, transitions and a complete beginner performance for singing or humming. The vocal melody is not included in playback. Earlier score-based melody lessons remain optional. Adele currently has preparation exercises only.</p></div>`;
 }
 function progressPage() {
   const reviews = lessons.filter(l => state.review[l.id]);
@@ -172,6 +173,7 @@ function progressPage() {
     ['Both hands together', 'Finish your first two-hand lesson', isDone(state, 'together'), 'hands'],
     ['Foundations in place', 'Explore the original 26 foundation lessons', lessons.filter(l => !['scientist', 'scientist-reference'].includes(l.chapter)).every(l => isDone(state, l.id)), 'leaf'],
     ['Your first Coldplay accompaniment', 'Play a complete introduction', isDone(state, 'scientist-play-intro'), 'music'],
+    ['Your first minute', 'Keep playing through the opening vocals', isDone(state, 'scientist-play-first-minute'), 'music'],
     ['A verse and chorus', 'Keep both sections moving', isDone(state, 'scientist-play-verse') && isDone(state, 'scientist-play-chorus'), 'hands'],
     ['A complete accompaniment', 'Play the whole beginner performance route', isDone(state, 'scientist-play-performance'), 'star'],
     ['Your first Coldplay melody', 'Optional score route: opening song section', isDone(state, 'scientist-phrases'), 'music'],
@@ -245,7 +247,7 @@ async function playDemo() {
   const s = currentLesson.steps[currentStep];
   try {
     if (s.mode === 'reference') { stopAudio(); return; }
-    if (s.tracks) await audio.playStudy(s.tracks, state.tempos[currentLesson.id] || currentLesson.bpm, { loop: looping, ...studySelection });
+    if (s.tracks) await audio.playStudy(practiceStudy(s, studySelection.bassStyle), state.tempos[currentLesson.id] || currentLesson.bpm, { loop: looping, ...studySelection });
     else await audio.play(s.pattern, state.tempos[currentLesson.id] || currentLesson.bpm, { loop: looping, bass: s.bass });
   }
   catch (error) { stopAudio(); toast(error.message); }
@@ -278,6 +280,11 @@ document.addEventListener('click', async event => {
   const button = event.target.closest('[data-action]'); if (!button || button.disabled) return;
   const { action, id } = button.dataset;
   if (action === 'source') { stopAudio(); return; }
+  if (action === 'study-tempo' && currentLesson?.steps[currentStep]?.firstMinute) {
+    const bpm = Number(button.dataset.bpm);
+    if (![50, 60, 76].includes(bpm)) return;
+    stopAudio(); state.tempos[currentLesson.id] = bpm; persist(); render(); return;
+  }
   if (action === 'study-section') {
     const tracks = currentLesson?.steps[currentStep]?.tracks;
     if (!tracks?.sections) return;
@@ -349,6 +356,9 @@ document.addEventListener('click', async event => {
     }
     state.tempos[currentLesson.id] = Math.max(40, (state.tempos[currentLesson.id] || currentLesson.bpm) - 10); persist();
     document.querySelector('#tempo').value = state.tempos[currentLesson.id]; document.querySelector('#tempo-value').textContent = `${state.tempos[currentLesson.id]} BPM`;
+    const duration = document.querySelector('#study-duration');
+    if (duration) duration.textContent = studyDuration(s.tracks, state.tempos[currentLesson.id], studySelection);
+    document.querySelectorAll('[data-action="study-tempo"]').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.bpm) === state.tempos[currentLesson.id])));
     const advice = s.mode === 'rhythm' ? '<li>Listen to four clicks without tapping.</li><li>Join in for only four taps, one per click.</li><li>Pause, then try another group of four.</li>' : '<li>Read the supplied notes. You do not need to guess them by ear.</li><li>Try just the first two notes or one chord.</li><li>Practise one hand at a time.</li><li>Pause between notes and look for the next key.</li>';
     showModal(`<span class="modal-symbol">${icon('leaf')}</span><h2>Let’s make a little room.</h2><p>The practice speed is now <strong>${state.tempos[currentLesson.id]} BPM</strong>.</p><ol class="easier-list">${advice}</ol><p>There’s no need to keep up with the example yet.</p><button class="button primary" data-action="close">Try a smaller step ${icon('arrow')}</button>`);
   } else if (action === 'setup') showModal(`<span class="modal-symbol">${icon('keys')}</span><div class="eyebrow">YOUR CASIO CT-X870IN</div><h2>Ready in a few little steps.</h2><ol class="easier-list"><li>Switch on the keyboard and choose a comfortable volume.</li><li>Select a piano tone using PIANO/ORGAN and check the keyboard display.</li><li>Sit comfortably with relaxed shoulders and supported feet.</li><li>Place your laptop where you can glance at it without twisting.</li><li>Follow the checkpoint label: “Listen only” means just hear the example; “Follow the shown notes” means use the supplied keys on your Casio. Only the later ear-training lesson asks you to find notes from sound.</li></ol><div class="modal-callout">No cable or microphone is needed. You mark your own checkpoints; the app cannot check your notes or fingering.</div><p class="small">Guide notes use octave numbers: C4 is middle C. Keep your keyboard at its standard pitch without octave shift or transposition.</p><a class="text-button" href="https://www.casio.com/in/electronic-musical-instruments/support.CT-X870IN/" target="_blank" rel="noopener noreferrer">Casio manual & support ${icon('arrow')}</a>`);
@@ -365,10 +375,14 @@ document.addEventListener('input', event => {
   }
   if (event.target.id !== 'tempo' || !currentLesson) return;
   stopAudio(); state.tempos[currentLesson.id] = Number(event.target.value); document.querySelector('#tempo-value').textContent = `${event.target.value} BPM`; persist();
+  const duration = document.querySelector('#study-duration');
+  if (duration) duration.textContent = studyDuration(currentLesson.steps[currentStep].tracks, Number(event.target.value), studySelection);
+  document.querySelectorAll('[data-action="study-tempo"]').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.bpm) === Number(event.target.value))));
 });
 document.addEventListener('change', event => {
   if (event.target.id.startsWith('study-') && currentLesson?.steps[currentStep].tracks) {
     stopAudio();
+    if (event.target.id === 'study-bass') studySelection.bassStyle = event.target.value;
     if (event.target.id === 'study-hand') studySelection.hand = event.target.value;
     if (event.target.id === 'study-from') { studySelection.from = Number(event.target.value); studySelection.to = Math.max(studySelection.to, studySelection.from); }
     if (event.target.id === 'study-to') { studySelection.to = Number(event.target.value); studySelection.from = Math.min(studySelection.from, studySelection.to); }

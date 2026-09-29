@@ -30,7 +30,7 @@ test('every previously published resume point round-trips with completions and p
 });
 
 test('the main accompaniment path is self-contained and each checkpoint has playable notes and a goal', () => {
-  assert.equal(scientistAccompanimentPath.length, 10);
+  assert.equal(scientistAccompanimentPath.length, 11);
   for (const item of scientistAccompanimentPath) {
     const lesson = getLesson(item.id);
     for (let stepIndex = 0; stepIndex < lesson.steps.length; stepIndex++) {

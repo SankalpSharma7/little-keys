@@ -22,14 +22,14 @@ Open **http://localhost:5173** in your browser. Keep using the same browser and 
 
 ## Included
 
-- 42 lessons in 9 chapters, with 4 individually saved checkpoints per lesson (168 total). All 140 previously published checkpoints retain their identities, content and positions within their lessons.
+- 43 lessons in 9 chapters, with 4 individually saved checkpoints per lesson (172 total). All 168 previously published checkpoints retain their identities, content and positions within their lessons.
 - Clear checkpoint modes distinguish listening only, playing the supplied notes, keyboard exploration, rhythm tapping, and later ear training. Playback is beside the task; hand positions, note-reading help, and completion instructions explain what to do next.
 - A final “Work out a tiny tune by ear” lesson progresses from hearing pitch direction to finding a short song phrase. Answers and playback key highlights stay hidden until revealed; reference notes and optional hints support self-checking.
 - A chord playground for C, Am, F, and G, with note/finger guides, a custom four-bar sequence, held/pulsing/broken-chord playback, speed control, and looping. Chord choices and settings are included in progress backups.
 - Five chord lessons, including “Make a little music of your own,” with links between the lesson checkpoints and the playground.
 - Basic keyboard orientation, finger numbers, note names, rhythm, expression, melodies, chords, and both-hand coordination.
 - Traditional melodies and a simplified Beethoven theme: Hot Cross Buns, Mary Had a Little Lamb, Twinkle Twinkle Little Star, and the opening of Ode to Joy.
-- A self-contained ten-lesson Scientist accompaniment path (`#scientist`): the three existing chord/coordination lessons plus seven new lessons covering introduction, verses, chorus, transitions, voice coordination, outro and a complete beginner performance. Forty checkpoints include in-app audio and supplied keys. Earlier melody-with-score lessons remain optional and keep their saved progress. Adele retains its original preparation exercises.
+- A self-contained eleven-lesson Scientist accompaniment path (`#scientist`): the three existing chord/coordination lessons plus eight lessons covering introduction, verses, chorus, transitions, voice coordination, outro and a complete beginner performance. Forty-four checkpoints include in-app audio and supplied keys. Earlier melody-with-score lessons remain optional and keep their saved progress. Adele retains its original preparation exercises.
 - Synthesized audio guides, a highlighted preview keyboard (C3–B5), adjustable 40–100 BPM playback, looping, and a metronome.
 - Self-assessed checkpoint completion, resume, a quick recap, easier-practice suggestions, and a practice-again list.
 - Local progress storage and validated JSON backup export/import. A confirmation screen appears before an import replaces current progress.
@@ -45,7 +45,9 @@ Unreadable saved data is not automatically overwritten. If saving is unavailable
 
 ## Scientist path and scope
 
-Open **Song collection → The Scientist** or `#scientist`. The main path teaches a complete beginner **accompaniment**, played with left-hand bass and right-hand chords. It does not teach or reproduce the vocal melody on the keyboard. Singing/humming from memory is optional. All ten lessons have in-app practice examples; no external score or video is required for this route.
+Open **Song collection → The Scientist** or `#scientist`. The main path teaches a complete beginner **accompaniment**, played with left-hand bass and right-hand chords. It does not teach or reproduce the vocal melody on the keyboard. Singing/humming from memory is optional. All eleven lessons have in-app practice examples; no external score or video is required for this route.
+
+The focused **Intro into the first verse** lesson (`#lesson/scientist-play-first-minute/0`) supplies the repeating right-hand chord pulse, a choice of held or half-beat repeated bass, the entrance into the vocal section, and a twenty-bar joined run. That run uses three intro rounds plus two vocal-passage rounds and lasts about 63 seconds at 76 BPM (96 seconds at the default 50 BPM), excluding the count-in. Duration labels follow the selected range and speed. Presets at 50, 60 and 76 BPM support gradual practice. It is a simplified keyboard accompaniment without vocal audio, decorative fills or automatic recording synchronisation. The earlier whole-song beginner form retains its shorter introduction and all original checkpoints.
 
 The performance contains introduction, verse one, chorus, instrumental link, verse two, returning chorus, outro and final release. It uses a 91-bar practice form, fixed repeat counts, uniform chord pulses and a held ending. This is deliberately not an exact studio transcription or a recording-synchronised backing track. Section buttons select practice ranges, the hand selector isolates either part, and a four-beat count-in helps the learner enter. New performance checkpoints start with looping off so the ending can finish. Each lesson can take multiple 10–15 minute sessions.
 
@@ -60,7 +62,7 @@ Only chord facts and high-level form inform the new path; instructional prose an
 
 Existing lesson IDs and the order/meaning of their checkpoints are a compatibility contract. Add new material under new IDs; do not repurpose a previously completed checkpoint. Storage stays on `little-keys.progress.v1` at the existing website origin. Adding lessons can reduce the percentage while leaving the completed count unchanged.
 
-`tests/fixtures/published-checkpoints-v1.json` freezes the original 26 lessons and 104 checkpoints. `published-checkpoints-v2.json` additionally freezes the complete content of all 35 lessons published before the accompaniment extension. Tests round-trip all 140 existing resume points, completion lists, review markers and tempos; a completed checkpoint never turns into a different task. New material uses new IDs. Lesson numbers may shift, but saves use IDs, not lesson numbers. Do not regenerate this fixture to make a breaking edit pass. Any incompatible change needs an explicit data migration and preservation tests first.
+`tests/fixtures/published-checkpoints-v1.json` freezes the original 26 lessons and 104 checkpoints. `published-checkpoints-v2.json` additionally freezes the complete content of all 35 lessons published before the accompaniment extension. Tests round-trip all 140 existing resume points, completion lists, review markers and tempos; a completed checkpoint never turns into a different task. `published-checkpoints-v3.json` additionally records SHA-256 digests of all 42 previously published lesson step arrays, with preservation tests for all 168 resume positions. New material uses new IDs. Lesson numbers may shift, but saves use IDs, not lesson numbers. Do not regenerate this fixture to make a breaking edit pass. Any incompatible change needs an explicit data migration and preservation tests first.
 
 Install the local pre-push guard once after cloning:
 

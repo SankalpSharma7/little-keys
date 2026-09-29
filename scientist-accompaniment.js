@@ -104,4 +104,22 @@ export const accompanimentLessons = [
   ]),
 ];
 
-export const scientistAccompanimentPath = [...scientistLessons.slice(0, 3), ...accompanimentLessons];
+const minuteSections = [
+  { id: 'intro', name: 'Keyboard introduction', bars: repeat(opening, 3), cue: 'Three four-bar rounds. Keep the same pulse into the verse.' },
+  { id: 'verse-entry', name: 'First vocal passage · keep playing', bars: opening, cue: 'The voice enters over this round. Your hands continue the same chord pattern.' },
+  { id: 'verse-continue', name: 'Next vocal passage', bars: opening, cue: 'One more round underneath the voice. Complete the round before stopping.' },
+];
+export const scientistFirstMinute = {
+  ...lesson('first-minute', 'Intro into the first verse', 'Play the repeating keyboard part, then keep it going underneath the opening vocals.', [
+    step('Learn the repeating right-hand part', 'Read the keys below and play the four right-hand chord shapes. Press each chord four times, once on each count: 1–2–3–4. Release slightly between presses, then change shape on the next 1. Start at 50 BPM and practise one four-bar round. These piano chord colours are Dm7, B♭, F and Fsus2, as introduced in your earlier lessons.', 'Four presses per chord. Four chords per round.', opening, 'I can play the right-hand round twice with four even presses per chord.', { rightOnly: true }),
+    step('Add a steady left hand', 'Begin with Held bass: press the lower note on 1 and keep it down for four counts while your right hand repeats the chord. After two comfortable rounds, try Repeated bass. Count 1-and-2-and-3-and-4-and: left hand presses on every number and “and”; right hand presses on numbers only. Use Hear → Left hand to hear the bass alone, then choose Both hands. The held version is enough to continue.', 'Choose the bass pattern that lets your right hand stay steady.', opening, 'I played both hands through the round twice, using either bass pattern.'),
+    { ...step('Keep going when the singing begins', 'This exercise joins the last four-bar round of the introduction to the first four-bar round underneath the voice. At bar 5, the keyboard returns to Dm7 and carries on: do not stop or switch to playing the singer’s melody. Count through the section boundary. The app demonstrates only your keyboard part; there is no recorded voice, and you do not have to sing.', 'Last intro round → first vocal passage. Same hands, same pulse.', [], 'I crossed from the introduction into the vocal passage twice without an extra pause.'), tracks: performanceStudy([
+      { id: 'intro-last', name: 'Last intro round', bars: opening, cue: 'Four bars to prepare the entrance. Keep counting.' },
+      { ...minuteSections[1], cue: 'At bar 5, continue into Dm7. Imagine the singer entering while your hands keep playing.' },
+    ]) },
+    { ...step('Play your first-minute passage', 'Join three introduction rounds and two rounds underneath the opening vocals: twenty bars altogether. At 76 BPM, the notes take about 1 minute 3 seconds, plus the count-in. At 50 BPM they take 1 minute 36 seconds. Learn slowly first; 76 is a later target. Use the section buttons to work on the vocal entrance, then select Whole exercise for the full run. This beginner accompaniment keeps the chord pulse and leaves out decorative fills; its cue timings are a practice guide, not automatic synchronisation with a recording.', 'Three intro rounds + two vocal-passage rounds. Finish without restarting.', [], 'I completed all twenty bars at a steady speed, continuing through the vocal entrance.'), tracks: performanceStudy(minuteSections) },
+  ].map((s, i) => ({ ...s, firstMinute: true, bassChoice: i > 0 }))),
+  handGuide: 'Right hand: Dm7 and F use C4–F4–A4 (1–3–5); B♭ uses D4–F4–B♭4 (1–2–5); Fsus2 uses C4–F4–G4 (1–3–4). Left bass notes: D3, B♭3, F3, F3. Use one comfortable left finger and move freely. Held bass stays down for four counts; Repeated bass lifts and presses on numbers and “and”.',
+};
+
+export const scientistAccompanimentPath = [...scientistLessons.slice(0, 3), accompanimentLessons[0], scientistFirstMinute, ...accompanimentLessons.slice(1)];

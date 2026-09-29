@@ -1,0 +1,212 @@
+[
+  {
+    "id": "welcome",
+    "checkpoints": 4,
+    "sha256": "0a967f1db675361ee796ec1c0ae7d40ecd3aaf57b7e1eb51c427d03d00b3b4e3"
+  },
+  {
+    "id": "cde",
+    "checkpoints": 4,
+    "sha256": "498f481e4ceea24b69b0e061b6619018e38addef51fc5fa401db3ecd7ca2881a"
+  },
+  {
+    "id": "five-notes",
+    "checkpoints": 4,
+    "sha256": "bfa37bb75a889b2e3fd09cce6b7ce1304d440056931a5e7f430bb50fb288fe9e"
+  },
+  {
+    "id": "first-tune",
+    "checkpoints": 4,
+    "sha256": "6420751998dcee4804bd821a866ff1813c785d414fb42aa597550a940e2d4bcf"
+  },
+  {
+    "id": "steady-beat",
+    "checkpoints": 4,
+    "sha256": "9eeee8b258ee2ec25900ef6ddfd02356ecef5eb3cedb9ab9081f627e731ef727"
+  },
+  {
+    "id": "long-short",
+    "checkpoints": 4,
+    "sha256": "f4bc7aa813da19b52d0cd209e269a905f9b8a95f49ba47822a165d1e8bae5e1b"
+  },
+  {
+    "id": "rests",
+    "checkpoints": 4,
+    "sha256": "c24e2de39a25d2ff9147d8bf4509dd94afadbcf4aa9f80d5b4e276bb7583e6f4"
+  },
+  {
+    "id": "expression",
+    "checkpoints": 4,
+    "sha256": "a26f1ea12cc2efa48d48924f6d007f2c66d38300dd093b21b9ae27a810b1c7c2"
+  },
+  {
+    "id": "mary",
+    "checkpoints": 4,
+    "sha256": "f9158e86723868823cfd99470d8b766c7e274cdf6dfba0c7c673a674940ea189"
+  },
+  {
+    "id": "ode",
+    "checkpoints": 4,
+    "sha256": "29fd0bfa47c4a8d4bcd7e108cd649190617be783a610f7e7b41af9c6e30c9fdd"
+  },
+  {
+    "id": "twinkle",
+    "checkpoints": 4,
+    "sha256": "eba56a64aed7fa17d021a453411aaad27128f53b70a58303f1d2c8a970d59435"
+  },
+  {
+    "id": "note-map",
+    "checkpoints": 4,
+    "sha256": "4730c37dbb8d7e43dc7e47987ae7ca04dc590a409cfa05cc3539b8ac91bce7bb"
+  },
+  {
+    "id": "c-chord",
+    "checkpoints": 4,
+    "sha256": "54f6b38d14e81b5390577fb5e8ac2f173c26e834efcd82d47ef5a9446d289cdc"
+  },
+  {
+    "id": "am-f",
+    "checkpoints": 4,
+    "sha256": "670cae745c04b8732a4f1f655d8af02828deba65aee56d0c052be24aa0a238a6"
+  },
+  {
+    "id": "g-changes",
+    "checkpoints": 4,
+    "sha256": "566092dd88a269b3844984f079e51a80b5b6d6531d3c3cc2367212767a23201f"
+  },
+  {
+    "id": "broken-chords",
+    "checkpoints": 4,
+    "sha256": "ffd53d62d9cb188c3ce5890dfbcc500ae4c9d44db920a8b7482536cbf59aa560"
+  },
+  {
+    "id": "chord-play",
+    "checkpoints": 4,
+    "sha256": "30c7903c43f0a738e6f82b0155eee31463c2b2fbcd98668371325a4309925579"
+  },
+  {
+    "id": "left-hand",
+    "checkpoints": 4,
+    "sha256": "c6cc85a1ebe8e7dcb8b999d1ac8620a78ebe04fa94de7bc7d9155cd5341abdfc"
+  },
+  {
+    "id": "together",
+    "checkpoints": 4,
+    "sha256": "9d140d4d7c74707205c4da94d8803ee74bfcb5b91f388b1479ac0c25398f9489"
+  },
+  {
+    "id": "bass-chords",
+    "checkpoints": 4,
+    "sha256": "29b77dfd2c565347606624562ad7099f4f637ab70999cf84131f89e6236742cc"
+  },
+  {
+    "id": "hands-flow",
+    "checkpoints": 4,
+    "sha256": "edba39f742371cbe14577ab44ab60d47aeb2e0e49a150b75d1a8ea016e8e283b"
+  },
+  {
+    "id": "scientist-prep",
+    "checkpoints": 4,
+    "sha256": "15397451796b632407dc36843e33690e1c4717d819e808118dc04fb94cc80624"
+  },
+  {
+    "id": "scientist-both",
+    "checkpoints": 4,
+    "sha256": "0833ba45abd929ce982b0512dbe4b192863cc900c3fa125e34b122b7836a5174"
+  },
+  {
+    "id": "adele-prep",
+    "checkpoints": 4,
+    "sha256": "23e8c175816aa8844a8e511c901d000890d3d7c7963220523ce115533034e4bf"
+  },
+  {
+    "id": "adele-both",
+    "checkpoints": 4,
+    "sha256": "ea76c6246e4c7c13957762e1b63a40e1f1e50a7cf713e76a041a442ba8b7a17f"
+  },
+  {
+    "id": "scientist-keys",
+    "checkpoints": 4,
+    "sha256": "0a4c376b3ceb8f8f606cfafdbc9d13db828195e0f978bfafdef91e0fa360602d"
+  },
+  {
+    "id": "scientist-shapes",
+    "checkpoints": 4,
+    "sha256": "63faac0200d969de2aeeaacadeeceefeda03aef4c5eede0f0742a3317c03757e"
+  },
+  {
+    "id": "scientist-pulse",
+    "checkpoints": 4,
+    "sha256": "f546b62c1f4bf2b4ed542994ac68b7db1dbbe5756a83b587b879d27f5ea4a6eb"
+  },
+  {
+    "id": "scientist-play-intro",
+    "checkpoints": 4,
+    "sha256": "44bf4cf57839300cca36a52639d75d4d3ec86cdfd4ba76f919964e2d96aee6eb"
+  },
+  {
+    "id": "scientist-play-verse",
+    "checkpoints": 4,
+    "sha256": "53e16732a1ccd741a4777597294d1f3cc426320aaf9a23ae5f286c8c646eb80a"
+  },
+  {
+    "id": "scientist-play-chorus",
+    "checkpoints": 4,
+    "sha256": "a6d847c6cd691aabdad3e2b215564acab5e3667e99160fa0bb832ec6ca4ba9f3"
+  },
+  {
+    "id": "scientist-play-middle",
+    "checkpoints": 4,
+    "sha256": "74f7b1cb67136ec325f2c39fb312842ad5f4347bb7a1569753826a2ab6cbbad4"
+  },
+  {
+    "id": "scientist-play-voice",
+    "checkpoints": 4,
+    "sha256": "e763929b7810f0c960de76045abdf18d4f13f3e4cc4d4d1c2f9cfa196ec633ec"
+  },
+  {
+    "id": "scientist-play-ending",
+    "checkpoints": 4,
+    "sha256": "c18309f634778c3c26478a734f177a684e90b857949c1c7a12f76b58383ee779"
+  },
+  {
+    "id": "scientist-play-performance",
+    "checkpoints": 4,
+    "sha256": "c6bcee7eeb473265b2e54bd92a8fbcba0b056afc7c18d32a0a8a91821e0c9f8e"
+  },
+  {
+    "id": "scientist-read",
+    "checkpoints": 4,
+    "sha256": "7e5b6baa61612c5a6b6cdc9bae432bd80fd0257a29a5061ef8824362e65e3c0f"
+  },
+  {
+    "id": "scientist-phrases",
+    "checkpoints": 4,
+    "sha256": "239112cf41ab8fb6b8a9fab064a0e46267c833511fbb67ef4d9275d19f539b30"
+  },
+  {
+    "id": "scientist-support",
+    "checkpoints": 4,
+    "sha256": "69700fda10d5f40a6212376aafe30d1202084a4ef1ce3e74470f3c4926289918"
+  },
+  {
+    "id": "scientist-chorus",
+    "checkpoints": 4,
+    "sha256": "c3bda403da9e1a21854ce6dd003d0b57899a8337135e32eda2af65f6516d53ff"
+  },
+  {
+    "id": "scientist-whole",
+    "checkpoints": 4,
+    "sha256": "c84c30716b1637e3a9c8d6f50deadcb9a841b282040389f6c2d8b92cd204b894"
+  },
+  {
+    "id": "scientist-performance",
+    "checkpoints": 4,
+    "sha256": "6cf1ccfd9b020dcdb606969b11a4f090bffd3e20fbd76a05f6c1addbfb577f7b"
+  },
+  {
+    "id": "playing-by-ear",
+    "checkpoints": 4,
+    "sha256": "2752a62b07a6373b413a6ec98db251be98271f7f9f0258552c671800a3da85f7"
+  }
+]
