@@ -7,6 +7,7 @@ import { freshState, loadState, saveState, completeStep, nextLesson, STORAGE_KEY
 import { renderLesson } from '../lesson-view.js';
 import { buildSongTimeline } from '../song-audio.js';
 import { PianoAudio } from '../audio.js';
+import { lyricAtBar, lyricCues } from '../scientist-lyrics.js';
 const published = JSON.parse(readFileSync(new URL('./fixtures/published-checkpoints-v2.json', import.meta.url)));
 
 test('all 35 published lessons retain every existing checkpoint, including the earlier Scientist path', () => {
@@ -91,16 +92,34 @@ test('performance lesson offers the full piano tune from its first checkpoint', 
   assert.match(html, /data-action="step" data-step="3"/);
 });
 
-test('every full performance checkpoint shows a safe lyrics area below the keyboard', () => {
+test('supplied lyric phrases cover the vocal bars of the beginner arrangement', () => {
+  const study = performanceStudy();
+  const cues = lyricCues(study);
+  assert.equal(cues.length, 33);
+  assert.deepEqual(Object.fromEntries(study.sections.map(section => [section.id, cues.filter(cue => cue.sectionId === section.id).length])), {
+    intro: 0, 'verse-one': 11, 'chorus-one': 5, link: 0,
+    'verse-two': 12, 'chorus-two': 5, outro: 0, ending: 0,
+  });
+  for (const section of study.sections) for (let bar = section.from; bar <= section.to; bar++) {
+    const matching = cues.filter(cue => bar >= cue.from && bar <= cue.to);
+    assert.equal(matching.length, ['verse-one', 'chorus-one', 'verse-two', 'chorus-two'].includes(section.id) ? 1 : 0, section.id + ' bar ' + bar);
+    assert.equal(lyricAtBar(study, bar).chord, study.bars[bar]);
+  }
+});
+
+test('every full performance checkpoint shows aligned lyrics and keys below the keyboard', () => {
   const lesson = getLesson('scientist-play-performance');
   const chapter = chapters.find(c => c.id === lesson.chapter);
   for (let stepIndex = 0; stepIndex < lesson.steps.length; stepIndex++) {
     const html = renderLesson({ lesson, stepIndex, chapter, lessonNumber: 1, lessonCount: lessons.length, done: [], bpm: 50, looping: false, icon: () => '', keyboard: () => '<div id="test-keyboard"></div>', title: () => '', scientistLyrics: '<script>practice</script>' });
     const keyboardIndex = html.indexOf('id="test-keyboard"');
-    const lyricsIndex = html.indexOf('id="scientist-lyrics"');
+    const lyricsIndex = html.indexOf('class="sing-along"');
     const transportIndex = html.indexOf('class="transport"');
     assert.ok(keyboardIndex < lyricsIndex && lyricsIndex < transportIndex);
-    assert.match(html, /Open Coldplay’s official lyrics/);
+    assert.match(html, /id="lyrics-current-line"/);
+    assert.match(html, /id="lyrics-current-keys"/);
+    if (stepIndex !== 2) assert.match(html, /data-action="play-from-lyric"/);
+    else assert.match(html, /Instrumental practice passage/);
     assert.match(html, /&lt;script&gt;practice&lt;\/script&gt;/);
     assert.doesNotMatch(html, /<script>practice<\/script>/);
   }

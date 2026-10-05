@@ -1,7 +1,9 @@
 import { chapters, lessons, getLesson, totalCheckpoints } from './curriculum.js';
 import { loadState, saveState, validateState, countDone, isDone, completedLessons, progressPercent, firstUnfinishedStep, completeStep, nextLesson, resumePoint, localDay } from './state.js';
 import { practiceStudy, studyDuration } from './song-audio.js';
-import { scientistOverview } from './song-view.js';
+import { scientistOverview, displayNote } from './song-view.js';
+import { accompanimentChords } from './scientist-accompaniment.js';
+import { lyricAtBar } from './scientist-lyrics.js';
 import { midi } from './audio.js';
 import { PianoAudio } from './audio.js';
 import { chords, getChord, styles as chordStyles, chordPattern } from './chords.js';
@@ -82,9 +84,33 @@ const audio = new PianoAudio((notes, index, metronome) => {
   const lyricsPosition = document.querySelector('#lyrics-position');
   if (lyricsPosition) {
     const tracks = currentLesson?.steps[currentStep]?.tracks;
-    const bar = Math.floor(index / 4);
-    const section = tracks?.sections?.find(part => bar >= part.from && bar <= part.to);
-    lyricsPosition.textContent = metronome && index < 0 ? `Count in: ${index + 5} of 4` : !metronome && index >= 0 && section ? `${section.name} · bar ${bar + 1} of ${tracks.bars.length}` : 'Ready to sing · start the example or click a bar above.';
+    if (metronome && index < 0) lyricsPosition.textContent = `Count in: ${index + 5} of 4`;
+    else if (!metronome && index >= 0 && tracks?.sections) {
+      const bar = Math.floor(index / 4);
+      const { section, cue, chord: name } = lyricAtBar(tracks, bar);
+      const chord = accompanimentChords[name];
+      if (section && chord) {
+        lyricsPosition.textContent = `${section.name} · bar ${bar + 1} of ${tracks.bars.length}`;
+        const line = document.querySelector('#lyrics-current-line');
+        const words = cue?.text || 'Instrumental · keep the chords moving';
+        if (line && line.textContent !== words) line.textContent = words;
+        const chordName = document.querySelector('#lyrics-current-chord');
+        if (chordName && chordName.textContent !== name) chordName.textContent = name;
+        const keys = `Left ${displayNote(chord.bass)} · Right ${chord.right.map(displayNote).join(' + ')}`;
+        const keyGuide = document.querySelector('#lyrics-current-keys');
+        if (keyGuide && keyGuide.textContent !== keys) keyGuide.textContent = keys;
+        const previous = document.querySelector('.lyric-line.active');
+        const active = cue ? document.querySelector(`.lyric-line[data-lyric-from="${cue.from}"]`) : null;
+        if (previous !== active) {
+          previous?.classList.remove('active');
+          previous?.removeAttribute('aria-current');
+          active?.classList.add('active');
+          active?.setAttribute('aria-current', 'true');
+          const score = document.querySelector('.lyric-score');
+          if (score && active) score.scrollTo({ top: Math.max(0, active.offsetTop - score.offsetTop - score.clientHeight / 3), behavior: 'smooth' });
+        }
+      }
+    }
   }
   document.querySelectorAll('.note-chip').forEach(chip => chip.classList.toggle('active', !metronome && Number(chip.dataset.index) === index));
   document.querySelectorAll('.beat-dot').forEach((dot, i) => dot.classList.toggle('active', metronome && i === index % 4));
@@ -339,7 +365,7 @@ document.addEventListener('click', async event => {
   else if (action === 'recap') showRecap();
   else if (action === 'goal') showGoal(id);
   else if (action === 'complete') completedCheckpoint();
-  else if (action === 'play-from-bar') {
+  else if (action === 'play-from-bar' || action === 'play-from-lyric') {
     const tracks = currentLesson?.steps[currentStep]?.tracks;
     const bar = Number(button.dataset.bar);
     if (!tracks || !Number.isInteger(bar) || bar < 0 || bar >= tracks.bars.length) return;
@@ -347,7 +373,7 @@ document.addEventListener('click', async event => {
     studySelection.from = bar;
     studySelection.to = tracks.bars.length - 1;
     render();
-    document.querySelector(`[data-action="play-from-bar"][data-bar="${bar}"]`)?.focus({ preventScroll: true });
+    document.querySelector(`[data-action="${action}"][data-bar="${bar}"]`)?.focus({ preventScroll: true });
     await playDemo();
   }
   else if (action === 'play-from-note') {
