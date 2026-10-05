@@ -6,6 +6,7 @@ import { scientistAccompanimentPath, accompanimentSections, accompanimentChords,
 import { freshState, loadState, saveState, completeStep, nextLesson, STORAGE_KEY } from '../state.js';
 import { renderLesson } from '../lesson-view.js';
 import { buildSongTimeline } from '../song-audio.js';
+import { PianoAudio } from '../audio.js';
 const published = JSON.parse(readFileSync(new URL('./fixtures/published-checkpoints-v2.json', import.meta.url)));
 
 test('all 35 published lessons retain every existing checkpoint, including the earlier Scientist path', () => {
@@ -29,7 +30,7 @@ test('every previously published resume point round-trips with completions and p
   assert.equal(checked, 140);
 });
 
-test('the main accompaniment path is self-contained and each checkpoint has playable notes and a goal', () => {
+test('every accompaniment checkpoint has playable notes and a goal', () => {
   assert.equal(scientistAccompanimentPath.length, 11);
   for (const item of scientistAccompanimentPath) {
     const lesson = getLesson(item.id);
@@ -40,7 +41,8 @@ test('the main accompaniment path is self-contained and each checkpoint has play
       const html = renderLesson({ lesson, stepIndex, chapter: chapters.find(c => c.id === lesson.chapter), lessonNumber: 1, lessonCount: lessons.length, done: [], bpm: 50, looping: false, icon: () => '', keyboard: () => '', title: () => '' });
       assert.ok(html.includes('id="play-demo"'));
       assert.ok(html.includes('id="play-notes"'));
-      assert.ok(!html.includes('https://'));
+      if (lesson.id === 'scientist-play-performance') assert.match(html, /youtube-nocookie\.com\/embed\/DesLlVjHiGA/);
+      else assert.ok(!html.includes('https://'));
       if (step.accompaniment) { assert.ok(step.task); assert.ok(html.includes('Your chord finder')); }
     }
   }
@@ -79,4 +81,29 @@ test('full performance contains every section, correct chord pitches, and a held
   }
   assert.equal(study.bars.at(-1), 'F');
   assert.equal(buildSongTimeline(study).points.at(-1).notes.length, 0);
+});
+
+test('performance lesson offers the full piano tune from its first checkpoint', () => {
+  const lesson = getLesson('scientist-play-performance');
+  const html = renderLesson({ lesson, stepIndex: 0, chapter: chapters.find(c => c.id === lesson.chapter), lessonNumber: 1, lessonCount: lessons.length, done: [], bpm: 50, looping: false, icon: () => '', keyboard: () => '', title: () => '' });
+  assert.match(html, /Full song piano demonstration/);
+  assert.match(html, /youtube-nocookie\.com\/embed\/DesLlVjHiGA/);
+  assert.match(html, /data-action="step" data-step="3"/);
+});
+
+test('full accompaniment queues only the opening seconds of audio', async () => {
+  class SchedulingProbe extends PianoAudio {
+    constructor() { super(() => {}, () => {}); this.scheduled = []; this.pending = []; }
+    async init() { this.ctx = { currentTime: 0 }; }
+    tone(note, start) { this.scheduled.push([note, start]); }
+    click() {}
+    timer(fn, ms) { this.pending.push([fn, ms]); }
+  }
+  const player = new SchedulingProbe();
+  await player.playStudy(performanceStudy(), 50, { countIn: false });
+  assert.ok(player.scheduled.length > 0);
+  assert.ok(player.scheduled.length < 40, 'do not create the whole song’s oscillators at once');
+  assert.ok(player.scheduled.every(([, start]) => start <= 4.85));
+  assert.ok(player.pending.some(([, ms]) => ms === 400));
+  player.stop();
 });

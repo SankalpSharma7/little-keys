@@ -87,13 +87,30 @@ export class PianoAudio {
         this.timer(() => { if (token === this.token) this.onNote([], i - 4, true); }, (when - this.ctx.currentTime) * 1000);
       }
       const musicStart = start + lead * beatSeconds;
-      for (const event of timeline.events) this.tone(event.note, musicStart + event.beat * beatSeconds, event.duration * beatSeconds * 0.95, event.hand === 'left' ? 0.65 : 0.8);
-      for (const point of timeline.points) this.timer(() => {
-        if (token === this.token) this.onNote(point.notes, point.index, false);
-      }, (musicStart + point.beat * beatSeconds - this.ctx.currentTime) * 1000);
       const end = musicStart + timeline.beats * beatSeconds;
-      if (loop) this.timer(() => cycle(end), (end - this.ctx.currentTime - 0.12) * 1000);
-      else this.timer(() => { if (token === this.token) { this.onNote([], -1, false); this.onEnd(); } }, (end - this.ctx.currentTime) * 1000);
+      let eventIndex = 0, pointIndex = 0;
+      const scheduleAhead = () => {
+        if (token !== this.token) return;
+        // A whole performance lasts several minutes. Keep only a few seconds of
+        // oscillators and UI timers queued, rather than creating them all at once.
+        const horizon = Math.max(this.ctx.currentTime + 2.5, musicStart + Math.min(timeline.beats, 4) * beatSeconds);
+        while (eventIndex < timeline.events.length && musicStart + timeline.events[eventIndex].beat * beatSeconds <= horizon) {
+          const event = timeline.events[eventIndex++];
+          this.tone(event.note, musicStart + event.beat * beatSeconds, event.duration * beatSeconds * 0.95, event.hand === 'left' ? 0.65 : 0.8);
+        }
+        while (pointIndex < timeline.points.length && musicStart + timeline.points[pointIndex].beat * beatSeconds <= horizon) {
+          const point = timeline.points[pointIndex++];
+          this.timer(() => { if (token === this.token) this.onNote(point.notes, point.index, false); }, (musicStart + point.beat * beatSeconds - this.ctx.currentTime) * 1000);
+        }
+        if (eventIndex < timeline.events.length || pointIndex < timeline.points.length) {
+          this.timer(scheduleAhead, 400);
+        } else if (loop) {
+          this.timer(() => cycle(end), (end - this.ctx.currentTime - 0.12) * 1000);
+        } else {
+          this.timer(() => { if (token === this.token) { this.onNote([], -1, false); this.onEnd(); } }, (end - this.ctx.currentTime) * 1000);
+        }
+      };
+      scheduleAhead();
     };
     cycle(this.ctx.currentTime + 0.05);
   }

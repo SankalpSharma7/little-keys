@@ -3,6 +3,8 @@ export const scientistSource = {
   tutorial: 'https://blog.pianote.com/coldplay-the-scientist/',
   video: 'https://www.youtube.com/watch?v=yD0tj7vQd7s',
   score: 'https://pianote.s3.amazonaws.com/blog/pdf/The-Scientist-Lead-Sheet.pdf',
+  fullPianoVideo: 'https://www.youtube.com/watch?v=DesLlVjHiGA',
+  fullPianoEmbed: 'https://www.youtube-nocookie.com/embed/DesLlVjHiGA',
 };
 const pattern = text => text.split(' ').map(token => { const [pitch, beats] = token.split(':'); return { notes: pitch === '-' ? [] : pitch.split('+'), beats: Number(beats || 1) }; });
 const drill = (title, body, cue, notes, extra = {}) => ({ title, body, cue, pattern: notes ? pattern(notes) : [], mode: 'guided', ...extra });
