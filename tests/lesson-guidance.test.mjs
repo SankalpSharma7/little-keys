@@ -52,6 +52,22 @@ test('guided steps show the supplied notes, hand position, and completion goal',
   assert.ok(firstPhrase.includes('do not press it twice'));
 });
 
+test('every visible exercise card can start its example at that card', () => {
+  for (const lesson of lessons) for (let index = 0; index < lesson.steps.length; index++) {
+    const step = lesson.steps[index];
+    const html = screen(lesson.id, index, step.mode === 'ear' ? { revealed: true } : {});
+    if (step.tracks) {
+      const cards = [...html.matchAll(/data-action="play-from-bar" data-bar="(\d+)"/g)].map(match => Number(match[1]));
+      assert.deepEqual(cards, step.tracks.bars.map((_, bar) => bar), `${lesson.id} checkpoint ${index + 1}`);
+      assert.match(html, /Click any bar card to play from there/);
+    } else if (step.mode !== 'rhythm' && step.mode !== 'reference') {
+      const cards = [...html.matchAll(/data-action="play-from-note" data-index="(\d+)"/g)].map(match => Number(match[1]));
+      assert.deepEqual(cards, step.pattern.map((_, note) => note), `${lesson.id} checkpoint ${index + 1}`);
+      assert.match(html, /Click any note card to play from there/);
+    }
+  }
+});
+
 test('rhythm-only checkpoint starts a real metronome instead of a silent example', () => {
   const html = screen('steady-beat', 0);
   assert.ok(html.includes('id="play-demo" class="button primary" data-action="metronome"'));

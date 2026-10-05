@@ -49,6 +49,7 @@ let currentStep = 0;
 let earRevealed = false;
 let earHintShown = false;
 let studySelection = { hand: 'both', from: 0, to: 0, countIn: true, bassStyle: 'held' };
+let patternStart = 0;
 let playing = false;
 let ticking = false;
 let looping = false;
@@ -72,7 +73,7 @@ const audio = new PianoAudio((notes, index, metronome) => {
   document.querySelectorAll('.piano-key').forEach(key => key.classList.toggle('sounding', !answerHidden && notes.some(note => midi(note) === midi(key.dataset.note))));
   const studyStatus = document.querySelector('#study-status');
   if (studyStatus) {
-    studyStatus.textContent = metronome && index < 0 ? `Count in: ${index + 5} of 4` : !metronome && index >= 0 && notes.length ? `${currentLesson?.steps[currentStep]?.tracks?.sections?.find(s => Math.floor(index / 4) >= s.from && Math.floor(index / 4) <= s.to)?.name || 'Practice'} · bar ${Math.floor(index / 4) + 1} · beat ${index % 4 + 1}` : ticking ? 'Metronome running' : 'Ready when you are. Start after the count-in.';
+    studyStatus.textContent = metronome && index < 0 ? `Count in: ${index + 5} of 4` : !metronome && index >= 0 && notes.length ? `${currentLesson?.steps[currentStep]?.tracks?.sections?.find(s => Math.floor(index / 4) >= s.from && Math.floor(index / 4) <= s.to)?.name || 'Practice'} · bar ${Math.floor(index / 4) + 1} · beat ${index % 4 + 1}` : ticking ? 'Metronome running' : studySelection.countIn ? 'Ready when you are. Start after the count-in.' : 'Ready when you are. Begin with the first sound.';
     document.querySelectorAll('[data-bar].study-bar, [data-bar].compact-bar').forEach(bar => bar.classList.toggle('active', !metronome && notes.length > 0 && Number(bar.dataset.bar) === Math.floor(index / 4)));
   }
   document.querySelectorAll('.note-chip').forEach(chip => chip.classList.toggle('active', !metronome && Number(chip.dataset.index) === index));
@@ -105,6 +106,7 @@ function goLesson(id, index = null) {
 }
 function route() {
   stopAudio();
+  patternStart = 0;
   earRevealed = false; earHintShown = false;
   const bits = location.hash.slice(1).split('/');
   if (bits[0] === 'lesson' && getLesson(bits[1])) {
@@ -241,14 +243,15 @@ async function playChords(mode) {
   try { await audio.play(chordTimeline, config.bpm, { loop: mode === 'sequence' && config.loop }); }
   catch (error) { stopAudio(); toast(error.message); }
 }
-async function playDemo() {
+async function playDemo(startIndex = 0) {
   if (!currentLesson) return;
+  patternStart = startIndex;
   stopAudio(); playing = true; updateTransport();
   const s = currentLesson.steps[currentStep];
   try {
     if (s.mode === 'reference') { stopAudio(); return; }
     if (s.tracks) await audio.playStudy(practiceStudy(s, studySelection.bassStyle), state.tempos[currentLesson.id] || currentLesson.bpm, { loop: looping, ...studySelection });
-    else await audio.play(s.pattern, state.tempos[currentLesson.id] || currentLesson.bpm, { loop: looping, bass: s.bass });
+    else await audio.play(s.pattern.slice(startIndex), state.tempos[currentLesson.id] || currentLesson.bpm, { loop: looping, bass: s.bass, indexOffset: startIndex });
   }
   catch (error) { stopAudio(); toast(error.message); }
 }
@@ -326,8 +329,25 @@ document.addEventListener('click', async event => {
   else if (action === 'recap') showRecap();
   else if (action === 'goal') showGoal(id);
   else if (action === 'complete') completedCheckpoint();
+  else if (action === 'play-from-bar') {
+    const tracks = currentLesson?.steps[currentStep]?.tracks;
+    const bar = Number(button.dataset.bar);
+    if (!tracks || !Number.isInteger(bar) || bar < 0 || bar >= tracks.bars.length) return;
+    stopAudio();
+    studySelection.from = bar;
+    studySelection.to = tracks.bars.length - 1;
+    render();
+    document.querySelector(`[data-action="play-from-bar"][data-bar="${bar}"]`)?.focus({ preventScroll: true });
+    await playDemo();
+  }
+  else if (action === 'play-from-note') {
+    const step = currentLesson?.steps[currentStep];
+    const index = Number(button.dataset.index);
+    if (!step?.pattern || !Number.isInteger(index) || index < 0 || index >= step.pattern.length) return;
+    await playDemo(index);
+  }
   else if (action === 'play') { if (playing) stopAudio(); else await playDemo(); }
-  else if (action === 'loop') { looping = !looping; updateTransport(); if (playing) await playDemo(); }
+  else if (action === 'loop') { looping = !looping; updateTransport(); if (playing) await playDemo(patternStart); }
   else if (action === 'metronome') {
     if (ticking) stopAudio();
     else { stopAudio(); ticking = true; updateTransport(); try { await audio.play(Array.from({ length: 4 }, () => ({ notes: [], beats: 1 })), state.tempos[currentLesson.id] || currentLesson.bpm, { loop: true, metronome: true }); } catch (e) { stopAudio(); toast(e.message); } }

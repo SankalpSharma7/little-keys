@@ -72,6 +72,36 @@ test('study playback schedules four count-in clicks, holds the bass once, and ca
   timers.forEach(t=>t.fn()); assert.equal(highlight.length,after); assert.ok(!calls.includes('end'));
 });
 
+test('playback from a selected note keeps the original card indices',async()=>{
+  const highlighted=[],tones=[],timers=[];
+  const audio=new PianoAudio((notes,index)=>highlighted.push([notes,index]),()=>{});
+  audio.init=async()=>{audio.ctx={currentTime:0};};
+  audio.tone=(note)=>tones.push(note);
+  audio.timer=(fn,ms)=>timers.push({fn,ms});
+  await audio.play([{notes:['E4'],beats:1},{notes:['F4'],beats:1}],60,{indexOffset:3});
+  assert.deepEqual(tones,['E4','F4']);
+  timers.filter(timer=>timer.ms<1500).forEach(timer=>timer.fn());
+  assert.deepEqual(highlighted.slice(-2),[[['E4'],3],[['F4'],4]]);
+});
+
+test('study playback can begin at a later bar and continues into the next bar',async()=>{
+  const highlighted=[],tones=[],timers=[];
+  const audio=new PianoAudio((notes,index)=>highlighted.push([notes,index]),()=>{});
+  audio.init=async()=>{audio.ctx={currentTime:0};};
+  audio.tone=(note)=>tones.push(note);
+  audio.timer=(fn,ms)=>timers.push({fn,ms});
+  const study={bars:['one','two','three'],events:[
+    {hand:'right',note:'C4',beat:0,duration:1},
+    {hand:'right',note:'D4',beat:4,duration:1},
+    {hand:'right',note:'E4',beat:8,duration:1},
+  ]};
+  await audio.playStudy(study,60,{from:1,to:2,countIn:false});
+  assert.equal(tones[0],'D4');
+  timers.find(timer=>timer.ms<100)?.fn();
+  assert.deepEqual(highlighted.at(-1),[['D4'],4]);
+  assert.equal(buildSongTimeline(study,{from:1,to:2}).events.at(-1).note,'E4');
+});
+
 test('every song checkpoint has a playable original exercise or an explicit source task',()=>{
   assert.equal(scientistLessons.length,9);
   for (const lesson of scientistLessons) for (let i=0;i<lesson.steps.length;i++) {

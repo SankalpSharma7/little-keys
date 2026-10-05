@@ -47,7 +47,7 @@ export class PianoAudio {
   }
   timer(fn, ms) { const timer = setTimeout(() => { this.timers = this.timers.filter(t => t !== timer); fn(); }, Math.max(0, ms)); this.timers.push(timer); }
   async preview(note) { await this.init(); this.tone(note, this.ctx.currentTime, 0.6); }
-  async play(pattern, bpm, { loop = false, bass, metronome = false } = {}) {
+  async play(pattern, bpm, { loop = false, bass, metronome = false, indexOffset = 0 } = {}) {
     this.stop();
     const token = this.token;
     await this.init();
@@ -61,7 +61,7 @@ export class PianoAudio {
         else for (const note of event.notes) this.tone(note, when, note === event.bass ? event.bassDuration * 0.98 : event.duration * 0.88, 1 / Math.sqrt(Math.max(1, event.notes.length)));
         this.timer(() => {
           if (token !== this.token) return;
-          this.onNote(metronome ? [] : [...new Set([...event.notes, ...(bass ? [bass] : [])])], event.index, metronome);
+          this.onNote(metronome ? [] : [...new Set([...event.notes, ...(bass ? [bass] : [])])], event.index + indexOffset, metronome);
         }, (when - this.ctx.currentTime) * 1000);
       }
       const end = start + data.duration;
