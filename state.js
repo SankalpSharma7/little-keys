@@ -17,6 +17,20 @@ export function nextLesson(state, afterId) {
   }
   return lessons.find(l => l.chapter !== 'scientist-reference' && !isDone(state, l.id)) || lessons.find(l => !isDone(state, l.id));
 }
+export function resumePoint(state) {
+  const saved = state.last;
+  const savedProgress = state.completed[saved.lessonId]?.length || 0;
+  const firstOpen = firstUnfinishedStep(state, saved.lessonId);
+  if (!isDone(state, saved.lessonId) && saved.step === firstOpen && (savedProgress || nextLesson(state)?.id === saved.lessonId)) return saved;
+
+  // Older versions saved every lesson visit as the resume point. Recover the
+  // latest checkpoint supported by completed work when that pointer is stale.
+  const lastStarted = [...lessons].reverse().find(lesson => state.completed[lesson.id]?.length);
+  if (!lastStarted) return { lessonId: lessons[0].id, step: 0 };
+  if (!isDone(state, lastStarted.id)) return { lessonId: lastStarted.id, step: firstUnfinishedStep(state, lastStarted.id) };
+  const next = nextLesson(state, lastStarted.id);
+  return next ? { lessonId: next.id, step: firstUnfinishedStep(state, next.id) } : saved;
+}
 export function completeStep(state, id, index) {
   const l = getLesson(id);
   if (!l || !Number.isInteger(index) || index < 0 || index >= l.steps.length) throw new Error('Unknown checkpoint');

@@ -1,5 +1,5 @@
 import { chapters, lessons, getLesson, totalCheckpoints } from './curriculum.js';
-import { loadState, saveState, validateState, countDone, isDone, completedLessons, progressPercent, firstUnfinishedStep, completeStep, nextLesson, localDay } from './state.js';
+import { loadState, saveState, validateState, countDone, isDone, completedLessons, progressPercent, firstUnfinishedStep, completeStep, nextLesson, resumePoint, localDay } from './state.js';
 import { practiceStudy, studyDuration } from './song-audio.js';
 import { scientistOverview } from './song-view.js';
 import { midi } from './audio.js';
@@ -116,7 +116,7 @@ function route() {
     const tracks = currentLesson.steps[currentStep].tracks;
     if (tracks?.sections) looping = false;
     studySelection = { hand: tracks?.events.some(e => e.hand === 'right') ? (tracks.events.some(e => e.hand === 'left') ? 'both' : 'right') : 'left', from: 0, to: tracks ? tracks.bars.length - 1 : 0, countIn: true, bassStyle: 'held' };
-    state.last = { lessonId: currentLesson.id, step: currentStep }; persist();
+    // Visiting a lesson is only a preview; completing a checkpoint moves the saved journey.
   } else { view = ['today', 'path', 'songs', 'chords', 'progress', 'scientist'].includes(bits[0]) ? bits[0] : 'today'; currentLesson = null; }
   practiceTick = Date.now(); render(); window.scrollTo({ top: 0 });
   document.querySelector('#main-heading')?.focus({ preventScroll: true });
@@ -139,7 +139,7 @@ function pianoIllustration() {
   return `<div class="hero-art" aria-hidden="true"><span class="art-orbit orbit-one"></span><span class="art-orbit orbit-two"></span><span class="floating-note note-one">♪</span><span class="floating-note note-two">♫</span><span class="art-star star-one">✧</span><span class="art-star star-two">✦</span><div class="art-caption">one note at a time</div><div class="illustration-piano"><div class="piano-top"><span></span><i></i><b>little keys</b></div><div class="illustration-keys">${Array.from({ length: 14 }, (_, i) => `<i class="illustration-white ${i === 4 ? 'pressed' : ''}">${i === 4 ? '<span>♪</span>' : ''}${[0,1,3,4,5].includes(i % 7) ? '<b></b>' : ''}</i>`).join('')}</div></div><div class="art-pill">${icon('check')} A good day to begin.</div></div>`;
 }
 function lessonRow(l, index, compact = false) {
-  const done = isDone(state, l.id); const checkpoints = state.completed[l.id]?.length || 0; const current = state.last.lessonId === l.id && !done;
+  const done = isDone(state, l.id); const checkpoints = state.completed[l.id]?.length || 0; const current = resumePoint(state).lessonId === l.id && !done;
   return `<button class="lesson-row ${done ? 'done' : ''} ${current ? 'current' : ''}" data-action="lesson" data-id="${l.id}"><span class="lesson-number">${done ? icon('check') : String(index + 1).padStart(2, '0')}</span><span class="lesson-row-copy"><strong>${esc(l.title)}</strong><small>${compact ? `${l.duration} min · 4 checkpoints` : esc(l.description)}</small></span><span class="lesson-row-meta">${state.review[l.id] ? icon('flag') : ''}${done ? '<span class="done-label">Completed</span>' : current ? '<span class="current-label">Your next step</span>' : `<span>${l.duration} min</span>`}${checkpoints > 0 && !done ? `<small>${checkpoints}/4</small>` : ''}${icon('arrow')}</span></button>`;
 }
 function goalCard(type, compact = false) {
@@ -148,11 +148,11 @@ function goalCard(type, compact = false) {
   return `<button class="goal-card ${adele ? 'adele' : 'coldplay'} ${compact ? 'compact' : ''}" data-action="goal" data-id="${type}"><span class="goal-art">${adele ? '<span class="orbit-disc"></span>' : '<span class="sky-moon"></span><span class="sky-stars">·　 ✧<br> ✦　 ·</span>'}</span><span class="goal-copy"><small>${adele ? 'ADELE' : 'COLDPLAY'}</small><strong>${adele ? 'Someone Like You' : 'The Scientist'}</strong><span>${done === goalLessons.length ? (adele ? 'Preparation complete' : 'Song path complete') : adele ? 'Your something-to-look-forward-to' : 'Chords → complete accompaniment'}</span></span>${icon('arrow')}</button>`;
 }
 function dashboard() {
-  const resume = getLesson(state.last.lessonId); const started = countDone(state) > 0; const allDone = countDone(state) === totalCheckpoints;
+  const saved = resumePoint(state); const resume = getLesson(saved.lessonId); const started = countDone(state) > 0; const allDone = countDone(state) === totalCheckpoints;
   const chapter = chapters.find(c => c.id === resume.chapter);
   const activeLessons = lessons.filter(l => l.chapter === chapter.id);
   return `${title('LET’S MAKE A LITTLE MUSIC', started ? 'Welcome back to your keys.' : 'Every pianist starts somewhere.', 'Your keyboard, a few quiet minutes, and something new to discover.', `<span class="session-badge">${icon('clock')} 10–15 minutes, just for you</span>`)}
-    <section class="hero"><div class="hero-copy"><span class="pill">${icon('spark')} ${allDone ? 'LOOK HOW FAR YOU’VE COME' : started ? 'KEEP YOUR LITTLE RHYTHM GOING' : 'YOUR FIRST CHAPTER STARTS HERE'}</span><h2>Small steps.<br><em>Beautiful music.</em></h2><p>${allDone ? 'Your foundations are in place. Revisit a favourite or give a tricky phrase a little more love.' : 'From finding your first C to playing something you love. Let’s take it one note at a time.'}</p><button class="button primary" data-action="resume">${icon('play')} ${allDone ? 'Revisit your practice' : started ? 'Continue learning' : 'Let’s play our first notes'} ${icon('arrow')}</button><div class="hero-next">${icon('flag')} <span>${esc(resume.title)} <span>· Checkpoint ${state.last.step + 1} of 4</span></span></div>${started ? '<button class="text-button recap-link" data-action="recap">Need a quick recap?</button>' : ''}</div>${pianoIllustration()}</section>
+    <section class="hero"><div class="hero-copy"><span class="pill">${icon('spark')} ${allDone ? 'LOOK HOW FAR YOU’VE COME' : started ? 'KEEP YOUR LITTLE RHYTHM GOING' : 'YOUR FIRST CHAPTER STARTS HERE'}</span><h2>Small steps.<br><em>Beautiful music.</em></h2><p>${allDone ? 'Your foundations are in place. Revisit a favourite or give a tricky phrase a little more love.' : 'From finding your first C to playing something you love. Let’s take it one note at a time.'}</p><button class="button primary" data-action="resume">${icon('play')} ${allDone ? 'Revisit your practice' : started ? 'Continue learning' : 'Let’s play our first notes'} ${icon('arrow')}</button><div class="hero-next">${icon('flag')} <span>${esc(resume.title)} <span>· Checkpoint ${saved.step + 1} of 4</span></span></div>${started ? '<button class="text-button recap-link" data-action="recap">Need a quick recap?</button>' : ''}</div>${pianoIllustration()}</section>
     <section class="stats-strip" aria-label="Your progress overview"><div>${icon('path')}<span><strong>${completedLessons(state)} <small>/ ${lessons.length}</small></strong><span>Lessons completed</span></span></div><div>${icon('flag')}<span><strong>${countDone(state)} <small>little wins</small></strong><span>Checkpoints saved</span></span></div><div>${icon('leaf')}<span><strong>${state.days.length} <small>${state.days.length === 1 ? 'day' : 'days'} at the keys</small></strong><span>Your own pace. Always.</span></span></div></section>
     <div class="dashboard-columns"><section class="path-preview"><div class="section-heading"><h2>Your next little steps</h2><a href="#path">See the full path ${icon('arrow')}</a></div><div class="chapter-kicker"><span class="chapter-icon ${chapter.color}">${icon(chapter.icon)}</span><div><small>CHAPTER ${chapters.indexOf(chapter) + 1}</small><h3>${chapter.name}</h3></div><span class="chapter-count">${activeLessons.filter(l => isDone(state, l.id)).length}/${activeLessons.length}</span></div><div class="lesson-list">${activeLessons.map(l => lessonRow(l, lessons.indexOf(l), true)).join('')}</div><div class="gentle-note">${icon('leaf')} No rush, no streaks to lose. Your progress will be right here.</div></section><aside class="dreams-panel"><div class="section-heading"><h2>A little further down the road</h2></div><p class="muted small">The songs you’re working toward.</p>${goalCard('scientist', true)}${goalCard('adele', true)}<div class="tip-card">${icon('spark')}<div><strong>A note before your first note</strong><p>You don’t need to read music yet. We’ll start with C, D, E and a few friendly guides.</p></div></div></aside></div>`;
 }
@@ -200,7 +200,7 @@ function lessonPage() {
   });
 }
 
-function render() { app.innerHTML = shell(view === 'scientist' ? scientistOverview({state, isDone, lessonRow, lessons, icon, title}) : view === 'lesson' ? lessonPage() : view === 'path' ? learningPath() : view === 'songs' ? songsPage() : view === 'progress' ? progressPage() : view === 'chords' ? playgroundPage({ title, icon, keyboard, config: state.playground, returnToLesson: state.last }) : dashboard()); if (view === 'chords') setChordGuide(state.playground.selected); }
+function render() { app.innerHTML = shell(view === 'scientist' ? scientistOverview({state, isDone, lessonRow, lessons, icon, title}) : view === 'lesson' ? lessonPage() : view === 'path' ? learningPath() : view === 'songs' ? songsPage() : view === 'progress' ? progressPage() : view === 'chords' ? playgroundPage({ title, icon, keyboard, config: state.playground, returnToLesson: resumePoint(state) }) : dashboard()); if (view === 'chords') setChordGuide(state.playground.selected); }
 function updateTransport() {
   const sequence = document.querySelector('#chord-play');
   if (sequence) { sequence.innerHTML = `${icon(chordPlaybackMode === 'sequence' ? 'stop' : 'play')} ${chordPlaybackMode === 'sequence' ? 'Stop sequence' : 'Play my sequence'}`; sequence.setAttribute('aria-pressed', String(chordPlaybackMode === 'sequence')); }
@@ -257,7 +257,7 @@ async function playDemo(startIndex = 0) {
 }
 function showModal(content) { stopAudio(); document.querySelector('#modal-content').innerHTML = `<button class="modal-close" data-action="close" aria-label="Close dialog">${icon('close')}</button>${content}`; const heading = modal.querySelector("h2"); if (heading) { heading.id = "modal-title"; modal.setAttribute("aria-labelledby", "modal-title"); } if (!modal.open) modal.showModal(); }
 function showRecap() {
-  const l = currentLesson || getLesson(state.last.lessonId); const stepIndex = currentLesson ? currentStep : state.last.step;
+  const saved = resumePoint(state); const l = currentLesson || getLesson(saved.lessonId); const stepIndex = currentLesson ? currentStep : saved.step;
   showModal(`<span class="modal-symbol">${icon('leaf')}</span><div class="eyebrow">A SOFT LANDING</div><h2>A quick little recap.</h2><p>You’re in <strong>${esc(l.title)}</strong>, at checkpoint ${stepIndex + 1} of 4.</p><div class="modal-callout">${esc(l.tip)}</div>${stepIndex > 0 ? `<p>Earlier in this lesson:</p><ul class="recap-list">${l.steps.slice(0, stepIndex).map(s => `<li><strong>${esc(s.title)}</strong><span>${esc(s.cue)}</span></li>`).join('')}</ul>` : '<p>Take a moment to find middle C and relax your hands before starting.</p>'}<button class="button primary" data-action="resume">Back to the keys ${icon('arrow')}</button>`);
 }
 function showGoal(id) {
@@ -319,7 +319,7 @@ document.addEventListener('click', async event => {
     stopAudio(); state.playground.loop = !state.playground.loop; persist();
     button.setAttribute('aria-pressed', String(state.playground.loop)); button.innerHTML = `${icon('loop')} Loop ${state.playground.loop ? 'on' : 'off'}`;
   } else if (action === 'lesson') goLesson(id);
-  else if (action === 'resume') goLesson(state.last.lessonId, state.last.step);
+  else if (action === 'resume') { const saved = resumePoint(state); state.last = saved; persist(); goLesson(saved.lessonId, saved.step); }
   else if (action === 'step') goLesson(currentLesson.id, Number(button.dataset.step));
   else if (action === 'previous' && currentStep > 0) goLesson(currentLesson.id, currentStep - 1);
   else if (action === 'home') navigate('today');
@@ -424,7 +424,7 @@ document.querySelector('#backup-input').addEventListener('change', async event =
 modal.addEventListener('click', event => { if (event.target === modal && (event.clientX < modal.getBoundingClientRect().left || event.clientX > modal.getBoundingClientRect().right || event.clientY < modal.getBoundingClientRect().top || event.clientY > modal.getBoundingClientRect().bottom)) modal.close(); });
 window.addEventListener('hashchange', route);
 window.addEventListener('pagehide', () => { stopAudio(); persist(); });
-document.addEventListener('visibilitychange', () => { if (document.hidden) stopAudio(); practiceTick = Date.now(); });
+document.addEventListener('visibilitychange', () => { practiceTick = Date.now(); });
 setInterval(() => {
   const now = Date.now(); const elapsed = Math.min(10, (now - practiceTick) / 1000); practiceTick = now;
   if (!['lesson', 'chords'].includes(view) || document.hidden || modal.open) return;

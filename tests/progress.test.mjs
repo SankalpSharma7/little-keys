@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { lessons, totalCheckpoints } from '../curriculum.js';
-import { freshState, completeStep, countDone, completedLessons, nextLesson, isDone, progressPercent, validateState, loadState, saveState, STORAGE_KEY } from '../state.js';
+import { freshState, completeStep, countDone, completedLessons, nextLesson, resumePoint, isDone, progressPercent, validateState, loadState, saveState, STORAGE_KEY } from '../state.js';
 import { buildEvents, midi, frequency } from '../audio.js';
 
 const fakeStorage = () => {
@@ -34,6 +34,28 @@ test('revisiting checkpoints does not inflate completion, and completing a lesso
   assert.equal(isDone(state, 'welcome'), true);
   assert.equal(completedLessons(state), 1);
   assert.deepEqual(state.last, { lessonId: 'cde', step: 0 });
+});
+
+test('resume recovers saved progress from an old visit-overwritten pointer', () => {
+  const state = freshState();
+  completeStep(state, 'welcome', 0);
+  const saved = { ...state.last };
+  state.last = { lessonId: 'mary', step: 2 };
+  assert.deepEqual(resumePoint(state), saved);
+  assert.deepEqual(state.last, { lessonId: 'mary', step: 2 }, 'deriving the resume point does not rewrite the backup');
+
+  for (const lesson of lessons.slice(0, 6)) lesson.steps.forEach((_, index) => completeStep(state, lesson.id, index));
+  state.last = { lessonId: 'rests', step: 2 };
+  assert.deepEqual(resumePoint(state), { lessonId: 'rests', step: 0 });
+});
+
+test('resume stays on the Scientist route after browsing an unrelated lesson', () => {
+  const state = freshState();
+  for (let index = 0; index < 4; index++) completeStep(state, 'scientist-pulse', index);
+  const saved = { lessonId: 'scientist-play-intro', step: 0 };
+  assert.deepEqual(resumePoint(state), saved);
+  state.last = { lessonId: 'mary', step: 2 };
+  assert.deepEqual(resumePoint(state), saved);
 });
 
 test('skipping ahead does not silently complete missed checkpoints', () => {

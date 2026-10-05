@@ -107,3 +107,26 @@ test('full accompaniment queues only the opening seconds of audio', async () => 
   assert.ok(player.pending.some(([, ms]) => ms === 400));
   player.stop();
 });
+
+test('background accompaniment queues enough audio to bridge throttled timers', async () => {
+  class SchedulingProbe extends PianoAudio {
+    constructor() { super(() => {}, () => {}); this.scheduled = []; this.pending = []; }
+    async init() { this.ctx = { currentTime: 0 }; }
+    tone(note, start) { this.scheduled.push([note, start]); }
+    click() {}
+    timer(fn, ms) { this.pending.push([fn, ms]); }
+  }
+  const previousDocument = globalThis.document;
+  globalThis.document = { hidden: true };
+  try {
+    const player = new SchedulingProbe();
+    await player.playStudy(performanceStudy(), 50, { countIn: false });
+    assert.ok(player.scheduled.some(([, start]) => start > 60));
+    assert.ok(player.scheduled.every(([, start]) => start <= 75.05));
+    assert.ok(player.pending.some(([, ms]) => ms === 400));
+    player.stop();
+  } finally {
+    if (previousDocument === undefined) delete globalThis.document;
+    else globalThis.document = previousDocument;
+  }
+});

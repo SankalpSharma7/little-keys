@@ -91,9 +91,9 @@ export class PianoAudio {
       let eventIndex = 0, pointIndex = 0;
       const scheduleAhead = () => {
         if (token !== this.token) return;
-        // A whole performance lasts several minutes. Keep only a few seconds of
-        // oscillators and UI timers queued, rather than creating them all at once.
-        const horizon = Math.max(this.ctx.currentTime + 2.5, musicStart + Math.min(timeline.beats, 4) * beatSeconds);
+        // A whole performance lasts several minutes. Queue a few seconds while
+        // visible, or enough to bridge throttled timers in a background tab.
+        const horizon = Math.max(this.ctx.currentTime + (globalThis.document?.hidden ? 75 : 2.5), musicStart + Math.min(timeline.beats, 4) * beatSeconds);
         while (eventIndex < timeline.events.length && musicStart + timeline.events[eventIndex].beat * beatSeconds <= horizon) {
           const event = timeline.events[eventIndex++];
           this.tone(event.note, musicStart + event.beat * beatSeconds, event.duration * beatSeconds * 0.95, event.hand === 'left' ? 0.65 : 0.8);
