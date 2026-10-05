@@ -91,6 +91,24 @@ test('performance lesson offers the full piano tune from its first checkpoint', 
   assert.match(html, /data-action="step" data-step="3"/);
 });
 
+test('every full performance checkpoint shows a safe lyrics area below the keyboard', () => {
+  const lesson = getLesson('scientist-play-performance');
+  const chapter = chapters.find(c => c.id === lesson.chapter);
+  for (let stepIndex = 0; stepIndex < lesson.steps.length; stepIndex++) {
+    const html = renderLesson({ lesson, stepIndex, chapter, lessonNumber: 1, lessonCount: lessons.length, done: [], bpm: 50, looping: false, icon: () => '', keyboard: () => '<div id="test-keyboard"></div>', title: () => '', scientistLyrics: '<script>practice</script>' });
+    const keyboardIndex = html.indexOf('id="test-keyboard"');
+    const lyricsIndex = html.indexOf('id="scientist-lyrics"');
+    const transportIndex = html.indexOf('class="transport"');
+    assert.ok(keyboardIndex < lyricsIndex && lyricsIndex < transportIndex);
+    assert.match(html, /Open Coldplay’s official lyrics/);
+    assert.match(html, /&lt;script&gt;practice&lt;\/script&gt;/);
+    assert.doesNotMatch(html, /<script>practice<\/script>/);
+  }
+  const other = getLesson('scientist-play-intro');
+  const html = renderLesson({ lesson: other, stepIndex: 0, chapter: chapters.find(c => c.id === other.chapter), lessonNumber: 1, lessonCount: lessons.length, done: [], bpm: 50, looping: false, icon: () => '', keyboard: () => '', title: () => '' });
+  assert.doesNotMatch(html, /id="scientist-lyrics"/);
+});
+
 test('full accompaniment queues only the opening seconds of audio', async () => {
   class SchedulingProbe extends PianoAudio {
     constructor() { super(() => {}, () => {}); this.scheduled = []; this.pending = []; }

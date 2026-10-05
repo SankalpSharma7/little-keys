@@ -43,6 +43,9 @@ const loaded = loadState(storage);
 let state = loaded.state;
 let storageWarning = loaded.error;
 let protectUnreadableSave = Boolean(loaded.error);
+const SCIENTIST_LYRICS_KEY = 'little-keys.scientist-lyrics.v1';
+let scientistLyrics = '';
+try { scientistLyrics = (storage.getItem(SCIENTIST_LYRICS_KEY) || '').slice(0, 12000); } catch {}
 let view = 'today';
 let currentLesson = null;
 let currentStep = 0;
@@ -75,6 +78,13 @@ const audio = new PianoAudio((notes, index, metronome) => {
   if (studyStatus) {
     studyStatus.textContent = metronome && index < 0 ? `Count in: ${index + 5} of 4` : !metronome && index >= 0 && notes.length ? `${currentLesson?.steps[currentStep]?.tracks?.sections?.find(s => Math.floor(index / 4) >= s.from && Math.floor(index / 4) <= s.to)?.name || 'Practice'} · bar ${Math.floor(index / 4) + 1} · beat ${index % 4 + 1}` : ticking ? 'Metronome running' : studySelection.countIn ? 'Ready when you are. Start after the count-in.' : 'Ready when you are. Begin with the first sound.';
     document.querySelectorAll('[data-bar].study-bar, [data-bar].compact-bar').forEach(bar => bar.classList.toggle('active', !metronome && notes.length > 0 && Number(bar.dataset.bar) === Math.floor(index / 4)));
+  }
+  const lyricsPosition = document.querySelector('#lyrics-position');
+  if (lyricsPosition) {
+    const tracks = currentLesson?.steps[currentStep]?.tracks;
+    const bar = Math.floor(index / 4);
+    const section = tracks?.sections?.find(part => bar >= part.from && bar <= part.to);
+    lyricsPosition.textContent = metronome && index < 0 ? `Count in: ${index + 5} of 4` : !metronome && index >= 0 && section ? `${section.name} · bar ${bar + 1} of ${tracks.bars.length}` : 'Ready to sing · start the example or click a bar above.';
   }
   document.querySelectorAll('.note-chip').forEach(chip => chip.classList.toggle('active', !metronome && Number(chip.dataset.index) === index));
   document.querySelectorAll('.beat-dot').forEach((dot, i) => dot.classList.toggle('active', metronome && i === index % 4));
@@ -196,7 +206,7 @@ function lessonPage() {
     lessonNumber: lessons.indexOf(l) + 1, lessonCount: lessons.length,
     done: state.completed[l.id] || [], bpm: state.tempos[l.id] || l.bpm,
     looping, review: state.review[l.id], revealed: earRevealed, hintShown: earHintShown,
-    icon, keyboard, title, selection: studySelection,
+    icon, keyboard, title, selection: studySelection, scientistLyrics,
   });
 }
 
@@ -390,6 +400,12 @@ document.addEventListener('click', async event => {
   else if (action === 'confirm-fresh') { protectUnreadableSave = false; storageWarning = null; persist(); modal.close(); render(); toast('Saving is enabled for this session.'); }
 });
 document.addEventListener('input', event => {
+  if (event.target.id === 'scientist-lyrics') {
+    scientistLyrics = event.target.value.slice(0, 12000);
+    try { storage.setItem(SCIENTIST_LYRICS_KEY, scientistLyrics); }
+    catch { toast('Lyrics could not be saved in this browser.'); }
+    return;
+  }
   if (event.target.id === 'chord-tempo') {
     stopAudio(); state.playground.bpm = Number(event.target.value); persist(); document.querySelector('#chord-tempo-value').textContent = `${state.playground.bpm} BPM`; return;
   }
